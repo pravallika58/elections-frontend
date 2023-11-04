@@ -1,0 +1,237 @@
+import { StyleSheet } from "react-native";
+import {
+  moderateScale,
+  scale,
+  textScale,
+  verticalScale,
+} from "../../../constants/responsiveSizes";
+import colors from "../../../constants/colors";
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  customHeaderContainer: {
+    borderBottomWidth: 0.5,
+    paddingBottom: verticalScale(20),
+    marginHorizontal: 0,
+    paddingHorizontal: scale(16),
+    borderColor: "grey",
+  },
+  chooseType: {
+    borderRadius: moderateScale(24),
+    marginTop: verticalScale(20),
+    marginHorizontal: scale(16),
+    padding: moderateScale(9),
+    backgroundColor: colors.white,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  typeArtEventText: {
+    fontSize: textScale(16),
+    fontFamily: "C-Regular",
+    color: colors.black,
+  },
+  iconStyle: {
+    width: moderateScale(14),
+    height: moderateScale(14),
+    right: scale(10),
+    resizeMode: "contain",
+  },
+  typeArtEventContainer: {
+    paddingVertical: verticalScale(8),
+    paddingHorizontal: scale(20),
+  },
+  selectText: {
+    fontSize: textScale(20),
+    fontFamily: "C-Bold",
+    color: colors.black,
+    fontWeight: "bold",
+    textAlign: "center",
+    paddingTop: verticalScale(20),
+    paddingBottom: verticalScale(10),
+  },
+  whenEvent: {
+    fontSize: textScale(20),
+    fontFamily: "C-Bold",
+    color: colors.black,
+    fontWeight: "bold",
+    paddingHorizontal: scale(10),
+    marginTop: verticalScale(28),
+  },
+  selectDateContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: verticalScale(30),
+    marginHorizontal: scale(10),
+  },
+  marginStyles: {
+    marginHorizontal: 0,
+    marginTop: 0,
+  },
+  labelStyle: {
+    fontSize: textScale(20),
+    fontFamily: "C-Regular",
+    color: colors.black,
+    fontWeight: "700",
+    paddingBottom: verticalScale(10),
+    paddingLeft: scale(4),
+  },
+  startDateCont: {
+    padding: moderateScale(9),
+    borderRadius: moderateScale(24),
+    backgroundColor: colors.white,
+    marginTop: verticalScale(10),
+  },
+  dateText: {
+    fontSize: textScale(18),
+    fontFamily: "C-Regular",
+    color: colors.black,
+  },
+  orStyle: {
+    fontSize: textScale(16),
+    fontFamily: "C-Bold",
+    color: colors.black,
+    textAlign: "center",
+    marginTop: verticalScale(20),
+  },
+  permanentCont: {
+    flexDirection: "row",
+    justifyContent: "center",
+    marginHorizontal: scale(10),
+    marginTop: verticalScale(20),
+    alignItems: "center",
+  },
+  permanentTextStyle: {
+    fontSize: textScale(16),
+    fontFamily: "C-Regular",
+    color: colors.black,
+    fontWeight: "700",
+    paddingRight: scale(10),
+  },
+  mainContainer: {
+    flex: 1,
+    marginHorizontal: scale(16),
+    backgroundColor: colors.white,
+    borderRadius: moderateScale(24),
+    marginTop: verticalScale(20),
+    paddingBottom: verticalScale(20),
+  },
+  addressContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginHorizontal: scale(16),
+  },
+  mapText: {
+    fontSize: textScale(16),
+    fontFamily: "C-Regular",
+    color: colors.black,
+    fontWeight: "700",
+    textAlign: "center",
+    paddingVertical: verticalScale(40),
+  },
+  featureText: {
+    fontSize: textScale(20),
+    fontFamily: "C-Bold",
+    color: colors.black,
+    fontWeight: "bold",
+    paddingHorizontal: scale(28),
+    marginTop: verticalScale(20),
+  },
+  mapStyle: {
+    width: moderateScale(340),
+    height: moderateScale(221),
+    alignSelf: "center",
+    borderRadius: moderateScale(8),
+
+    borderWidth: 1,
+  },
+  customContainerStyle1: {
+    marginTop: verticalScale(20),
+  },
+  styleInput: {
+    width: moderateScale(160),
+  },
+  container1: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginHorizontal: scale(16),
+  },
+  customLabelStyle: {
+    fontSize: textScale(24),
+  },
+  styleInput2: {
+    height: moderateScale(290),
+    paddingTop: verticalScale(20),
+  },
+  chooseFileContainer: {
+    width: moderateScale(340),
+    height: moderateScale(41),
+    borderRadius: moderateScale(39),
+    backgroundColor: colors.white,
+    alignSelf: "center",
+    marginTop: verticalScale(20),
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  part1: {
+    width: moderateScale(140),
+    height: moderateScale(41),
+    borderTopLeftRadius: moderateScale(39),
+    borderBottomLeftRadius: moderateScale(39),
+    backgroundColor: colors.white,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRightWidth: 1,
+  },
+  part2: {
+    width: moderateScale(200),
+    height: moderateScale(41),
+    borderTopRightRadius: moderateScale(39),
+    borderBottomRightRadius: moderateScale(39),
+    backgroundColor: colors.white,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  textStyle: {
+    fontSize: textScale(16),
+    fontFamily: "C-Regular",
+    color: colors.black,
+    fontWeight: "700",
+  },
+  infoContainer: {
+    marginHorizontal: scale(40),
+    marginTop: verticalScale(20),
+  },
+  infoText: {
+    fontSize: textScale(16),
+    fontFamily: "C-Regular",
+    color: colors.black,
+    fontWeight: "700",
+    textAlign: "center",
+    lineHeight: 30,
+  },
+  imageContainer: {
+    flexDirection: "row",
+    marginHorizontal: scale(16),
+    marginTop: verticalScale(20),
+    width: moderateScale(320),
+    height: moderateScale(60),
+  },
+  cameraIconStyle: {
+    width: moderateScale(60),
+    height: moderateScale(60),
+  },
+  imageStyle: {
+    width: moderateScale(60),
+    height: moderateScale(60),
+    borderRadius: moderateScale(12),
+    marginLeft: scale(5),
+  },
+  customStyles: {
+    marginBottom: verticalScale(20),
+  },
+});
+
+export default styles;
