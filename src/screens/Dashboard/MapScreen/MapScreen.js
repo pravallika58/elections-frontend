@@ -13,7 +13,11 @@ import React, {
   useState,
 } from "react";
 import styles from "./styles";
-import colors, { darkTheme, lightTheme } from "../../../constants/colors";
+import colors, {
+  darkTheme,
+  lightTheme,
+  mapCustomStyle,
+} from "../../../constants/colors";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import imagePath from "../../../constants/imagePath";
@@ -171,6 +175,7 @@ const MapScreen = ({ navigation }) => {
           region={region}
           provider={PROVIDER_GOOGLE}
           showsUserLocation={true}
+          customMapStyle={colorScheme === "light" ? [] : mapCustomStyle}
           style={{
             flex: 1,
           }}
