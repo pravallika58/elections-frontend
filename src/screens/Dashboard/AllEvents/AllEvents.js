@@ -1,4 +1,10 @@
-import { View, Text, FlatList, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  FlatList,
+  TouchableOpacity,
+  useColorScheme,
+} from "react-native";
 import React from "react";
 import styles from "./styles";
 import { Ionicons } from "@expo/vector-icons";
@@ -7,8 +13,11 @@ import imagePath from "../../../constants/imagePath";
 import dummyData from "../../../constants/dummyData";
 import { Entypo } from "@expo/vector-icons";
 import navigationStrings from "../../../constants/navigationStrings";
+import { darkTheme, lightTheme } from "../../../constants/colors";
 
 const AllEvents = ({ navigation }) => {
+  const colorScheme = useColorScheme();
+  const theme = colorScheme === "light" ? lightTheme : darkTheme;
   function renderHeader() {
     return (
       <View style={styles.header}>
@@ -16,10 +25,19 @@ const AllEvents = ({ navigation }) => {
           onPress={() => navigation.goBack()}
           name="arrow-back"
           size={24}
-          color="black"
+          color={theme.textColor}
         />
         <View style={styles.eventStyle}>
-          <Text style={styles.heading}>All Events</Text>
+          <Text
+            style={[
+              styles.heading,
+              {
+                color: theme.textColor,
+              },
+            ]}
+          >
+            All Events
+          </Text>
         </View>
       </View>
     );
@@ -27,7 +45,14 @@ const AllEvents = ({ navigation }) => {
 
   function renderListOfEvents() {
     return (
-      <View style={styles.flatlistCont}>
+      <View
+        style={[
+          styles.flatlistCont,
+          {
+            backgroundColor: theme.background,
+          },
+        ]}
+      >
         <FlatList
           showsVerticalScrollIndicator={false}
           data={dummyData.events}
@@ -40,7 +65,12 @@ const AllEvents = ({ navigation }) => {
                 })
               }
               activeOpacity={0.8}
-              style={styles.card}
+              style={[
+                styles.card,
+                {
+                  backgroundColor: theme.background,
+                },
+              ]}
             >
               <View style={styles.cardImage}>
                 <Image
@@ -54,8 +84,25 @@ const AllEvents = ({ navigation }) => {
               </View>
 
               <View style={styles.cardText}>
-                <Text style={styles.cardTitle}>{item.name}</Text>
-                <Text numberOfLines={2} style={styles.cardSubTitle}>
+                <Text
+                  style={[
+                    styles.cardTitle,
+                    {
+                      color: theme.textColor,
+                    },
+                  ]}
+                >
+                  {item.name}
+                </Text>
+                <Text
+                  numberOfLines={2}
+                  style={[
+                    styles.cardSubTitle,
+                    {
+                      color: theme.textColor,
+                    },
+                  ]}
+                >
                   {item.description}
                 </Text>
               </View>
@@ -66,7 +113,14 @@ const AllEvents = ({ navigation }) => {
     );
   }
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        {
+          backgroundColor: theme.background,
+        },
+      ]}
+    >
       {renderHeader()}
       {renderListOfEvents()}
     </View>

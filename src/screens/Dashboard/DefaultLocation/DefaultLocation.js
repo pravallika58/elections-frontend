@@ -56,7 +56,16 @@ const DefaultLocation = ({ navigation }) => {
             key={item.id}
           >
             <View>
-              <Text style={styles.titleStyle}>{item.title}</Text>
+              <Text
+                style={[
+                  styles.titleStyle,
+                  {
+                    color: theme.textColor,
+                  },
+                ]}
+              >
+                {item.title}
+              </Text>
               <Text style={styles.subTitleStyle}>{item.subtitle}</Text>
             </View>
             {title === item.title && (
@@ -79,13 +88,29 @@ const DefaultLocation = ({ navigation }) => {
     >
       {renderHeader()}
       <View style={styles.subHeadingContainer}>
-        <Text style={styles.subHeading}>
+        <Text
+          style={[
+            styles.subHeading,
+            {
+              color: theme.textColor,
+            },
+          ]}
+        >
           Select a location to display, when app is opened
         </Text>
       </View>
       <IconTextIcon label={title} showTick={true} />
       <View style={styles.favoriteStyleCont}>
-        <Text style={styles.favoriteStyle}>FAVORITES</Text>
+        <Text
+          style={[
+            styles.favoriteStyle,
+            {
+              color: theme.textColor,
+            },
+          ]}
+        >
+          FAVORITES
+        </Text>
       </View>
       {renderFavoriteList()}
       <WordIcon

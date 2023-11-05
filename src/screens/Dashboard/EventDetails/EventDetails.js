@@ -6,6 +6,7 @@ import {
   Dimensions,
   ScrollView,
   SafeAreaView,
+  useColorScheme,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import styles from "./styles";
@@ -20,10 +21,12 @@ import {
   textScale,
   verticalScale,
 } from "../../../constants/responsiveSizes";
-import colors from "../../../constants/colors";
+import colors, { darkTheme, lightTheme } from "../../../constants/colors";
 import Header from "../../../components/Header";
 
 const EventDetails = ({ route, navigation }) => {
+  const colorScheme = useColorScheme();
+  const theme = colorScheme === "light" ? lightTheme : darkTheme;
   const [modalWithOptions, setModalWithOptions] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
   const { item } = route.params;
@@ -60,7 +63,9 @@ const EventDetails = ({ route, navigation }) => {
     }
     return (
       <View style={{ flex: 1 }}>
-        <View style={{ width, height: "100%" }}>
+        <View
+          style={{ width, height: "100%", backgroundColor: theme.background }}
+        >
           <ScrollView
             horizontal={true}
             pagingEnabled={true}
@@ -98,7 +103,7 @@ const EventDetails = ({ route, navigation }) => {
                     opacity,
                     height: 10,
                     width: 10,
-                    backgroundColor: colors.logoColor,
+                    backgroundColor: theme.buttonBackground,
                     margin: 8,
                     borderRadius: 5,
                   }}
@@ -116,6 +121,7 @@ const EventDetails = ({ route, navigation }) => {
       <ScrollView
         style={{
           flex: 1,
+          backgroundColor: theme.background,
         }}
       >
         <View style={styles.nameOfSinger}>
@@ -127,7 +133,12 @@ const EventDetails = ({ route, navigation }) => {
             <Text
               numberOfLines={1}
               ellipsizeMode="tail"
-              style={styles.singerNameText}
+              style={[
+                styles.singerNameText,
+                {
+                  color: theme.textColor,
+                },
+              ]}
             >
               {item.name}
             </Text>
@@ -137,6 +148,7 @@ const EventDetails = ({ route, navigation }) => {
               style={[
                 styles.singerNameText,
                 {
+                  color: theme.textColor,
                   fontSize: textScale(12),
                   paddingTop: verticalScale(5),
                 },
@@ -149,24 +161,67 @@ const EventDetails = ({ route, navigation }) => {
           <TouchableOpacity
             onPress={() => setModalWithOptions(true)}
             activeOpacity={0.8}
-            style={styles.plusCont}
+            style={[
+              styles.plusCont,
+              {
+                backgroundColor: theme.background,
+              },
+            ]}
           >
-            <Image source={imagePath.icPlus} style={styles.plus} />
+            <Image
+              source={imagePath.icPlus}
+              style={[
+                styles.plus,
+                {
+                  tintColor: theme.textColor,
+                },
+              ]}
+            />
           </TouchableOpacity>
         </View>
         <View style={styles.addressCont}>
-          <Text style={styles.addressText}>
+          <Text
+            style={[
+              styles.addressText,
+              {
+                color: theme.textColor,
+              },
+            ]}
+          >
             Address: {item.event_address} {item.event_city} {item.event_state}
           </Text>
-          <Text style={styles.addressText}>
+          <Text
+            style={[
+              styles.addressText,
+              {
+                color: theme.textColor,
+              },
+            ]}
+          >
             Start date & Time: {item.start_date} {item.start_time}
           </Text>
-          <Text style={styles.addressText}>
+          <Text
+            style={[
+              styles.addressText,
+              {
+                color: theme.textColor,
+              },
+            ]}
+          >
             End date & Time: {item.end_date} {item.end_time}
           </Text>
         </View>
         <View style={[styles.addressCont, { borderBottomWidth: 0 }]}>
-          <Text style={styles.addressText}>{item.description}</Text>
+          <Text
+            style={[
+              styles.addressText,
+              {
+                color: theme.textColor,
+              },
+            ]}
+          >
+            {item.description}
+          </Text>
         </View>
       </ScrollView>
     );
@@ -185,7 +240,14 @@ const EventDetails = ({ route, navigation }) => {
           swipeDirection={["down"]}
           onSwipeComplete={() => setModalWithOptions(false)}
         >
-          <View style={styles.bottomContainer}>
+          <View
+            style={[
+              styles.bottomContainer,
+              {
+                backgroundColor: theme.bottomSheetColor,
+              },
+            ]}
+          >
             <TouchableOpacity
               onPress={() => {
                 navigation.navigate(navigationStrings.MAP_ROUTE),
@@ -194,32 +256,77 @@ const EventDetails = ({ route, navigation }) => {
               activeOpacity={0.8}
               style={styles.container2}
             >
-              <Entypo name="location-pin" size={24} color="black" />
-              <Text style={styles.textStyle}>Location</Text>
+              <Entypo name="location-pin" size={24} color={theme.textColor} />
+              <Text
+                style={[
+                  styles.textStyle,
+                  {
+                    color: theme.textColor,
+                  },
+                ]}
+              >
+                Location
+              </Text>
             </TouchableOpacity>
             <TouchableOpacity activeOpacity={0.8} style={styles.container2}>
               {isLiked ? (
                 <AntDesign name="heart" size={24} color="red" />
               ) : (
-                <AntDesign name="hearto" size={24} color="black" />
+                <AntDesign name="hearto" size={24} color={theme.textColor} />
               )}
-              <Text style={styles.textStyle}>Like</Text>
+              <Text
+                style={[
+                  styles.textStyle,
+                  {
+                    color: theme.textColor,
+                  },
+                ]}
+              >
+                Like
+              </Text>
             </TouchableOpacity>
             <TouchableOpacity
               activeOpacity={0.8}
               onPress={() => onShare(item.event_link)}
               style={styles.container2}
             >
-              <AntDesign name="sharealt" size={24} color="black" />
-              <Text style={styles.textStyle}>Share</Text>
+              <AntDesign name="sharealt" size={24} color={theme.textColor} />
+              <Text
+                style={[
+                  styles.textStyle,
+                  {
+                    color: theme.textColor,
+                  },
+                ]}
+              >
+                Share
+              </Text>
             </TouchableOpacity>
             <TouchableOpacity activeOpacity={0.8} style={styles.container2}>
-              <Entypo name="edit" size={24} color="black" />
-              <Text style={styles.textStyle}>Edit</Text>
+              <Entypo name="edit" size={24} color={theme.textColor} />
+              <Text
+                style={[
+                  styles.textStyle,
+                  {
+                    color: theme.textColor,
+                  },
+                ]}
+              >
+                Edit
+              </Text>
             </TouchableOpacity>
             <TouchableOpacity activeOpacity={0.8} style={styles.container2}>
               <AntDesign name="delete" size={24} color="red" />
-              <Text style={styles.textStyle}>Delete</Text>
+              <Text
+                style={[
+                  styles.textStyle,
+                  {
+                    color: theme.textColor,
+                  },
+                ]}
+              >
+                Delete
+              </Text>
             </TouchableOpacity>
           </View>
         </Modal>
@@ -228,13 +335,21 @@ const EventDetails = ({ route, navigation }) => {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView
+      style={[
+        styles.container,
+        {
+          backgroundColor: theme.background,
+        },
+      ]}
+    >
       {renderHeader()}
       <ScrollView
         style={[
           styles.container,
           {
             marginBottom: verticalScale(20),
+            backgroundColor: theme.background,
           },
         ]}
       >

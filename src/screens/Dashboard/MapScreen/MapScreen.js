@@ -96,10 +96,15 @@ const MapScreen = ({ navigation }) => {
         <GooglePlacesAutocomplete
           styles={{
             textInputContainer: {
+              backgroundColor: theme.inputContainer,
               width: "98%",
+              borderRadius: moderateScale(25),
             },
             textInput: {
               fontSize: textScale(15),
+              backgroundColor: theme.inputContainer,
+              color: theme.textColor,
+              borderRadius: moderateScale(25),
             },
           }}
           fetchDetails={true}
@@ -112,9 +117,22 @@ const MapScreen = ({ navigation }) => {
         <TouchableOpacity
           onPress={() => setShowFilterModal(true)}
           activeOpacity={0.8}
-          style={styles.filterCont}
+          style={[
+            styles.filterCont,
+            {
+              backgroundColor: theme.bottomSheetColor,
+            },
+          ]}
         >
-          <Image source={imagePath.icFilter} style={styles.filterIcon} />
+          <Image
+            source={imagePath.icFilter}
+            style={[
+              styles.filterIcon,
+              {
+                tintColor: theme.textColor,
+              },
+            ]}
+          />
         </TouchableOpacity>
       </View>
     );
@@ -122,29 +140,55 @@ const MapScreen = ({ navigation }) => {
 
   function renderHeader() {
     return (
-      <LinearGradient
-        colors={[colors.linear1, colors.linear2]}
-        style={styles.header}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 0, y: 1 }}
+      <View
+        style={[
+          styles.headerAgain,
+          {
+            backgroundColor: theme.bottomSheetColor,
+          },
+        ]}
       >
-        <View style={styles.headerAgain}>
-          <TouchableOpacity
-            activeOpacity={0.8}
-            onPress={() => navigation.openDrawer()}
+        <TouchableOpacity
+          activeOpacity={0.8}
+          onPress={() => navigation.openDrawer()}
+        >
+          <Image
+            source={imagePath.icMenu}
+            style={[
+              styles.menuIcon,
+              {
+                tintColor: theme.textColor,
+              },
+            ]}
+          />
+        </TouchableOpacity>
+        <View
+          style={{
+            flex: 1,
+          }}
+        >
+          <Text
+            style={[
+              styles.headerText,
+              {
+                color: theme.textColor,
+              },
+            ]}
           >
-            <Image source={imagePath.icMenu} style={styles.menuIcon} />
-          </TouchableOpacity>
-          <View
-            style={{
-              flex: 1,
-            }}
+            Elections
+          </Text>
+          <Text
+            style={[
+              styles.headerText2,
+              {
+                color: theme.textColor,
+              },
+            ]}
           >
-            <Text style={styles.headerText}>Elections</Text>
-            <Text style={styles.headerText2}>Bowling Green, Ohio</Text>
-          </View>
+            Bowling Green, Ohio
+          </Text>
         </View>
-      </LinearGradient>
+      </View>
     );
   }
 
@@ -153,14 +197,27 @@ const MapScreen = ({ navigation }) => {
       <TouchableOpacity
         onPress={() => navigation.navigate(navigationStrings.ALL_EVENTS)}
         activeOpacity={0.8}
-        style={styles.showEventsCont}
+        style={[
+          styles.showEventsCont,
+          {
+            backgroundColor: theme.background,
+          },
+        ]}
       >
-        <View style={styles.rectangle}>
+        <View
+          style={[
+            styles.rectangle,
+            {
+              backgroundColor: theme.bottomSheetColor,
+            },
+          ]}
+        >
           <Image
             source={imagePath.icMenu}
             style={{
               width: moderateScale(20),
               height: moderateScale(20),
+              tintColor: theme.textColor,
             }}
           />
         </View>
@@ -189,13 +246,40 @@ const MapScreen = ({ navigation }) => {
 
   function renderFooter() {
     return (
-      <View style={styles.footer}>
+      <View
+        style={[
+          styles.footer,
+          {
+            backgroundColor: theme.bottomSheetColor,
+          },
+        ]}
+      >
         {/* Tabs */}
-        <View style={styles.tabContainer}>
+        <View
+          style={[
+            styles.tabContainer,
+            {
+              backgroundColor: theme.bottomSheetColor,
+            },
+          ]}
+        >
           {constants.tabs.map((tab, index) => {
             const { icon, name } = tab;
             const tabStyle =
-              index === activeTab ? styles.tabPressed : styles.tab;
+              index === activeTab
+                ? {
+                    padding: moderateScale(8),
+                    justifyContent: "center",
+                    alignItems: "center",
+                    borderRadius: moderateScale(8),
+                    backgroundColor: theme.buttonBackground,
+                  }
+                : {
+                    padding: moderateScale(8),
+                    alignItems: "center",
+                    borderRadius: moderateScale(8),
+                    backgroundColor: theme.bottomSheetColor,
+                  };
             return (
               <TouchableOpacity
                 key={index}
@@ -212,8 +296,31 @@ const MapScreen = ({ navigation }) => {
                   }
                 }}
               >
-                <Image source={icon} style={styles.tabIcon} />
-                <Text style={styles.tabText}>{name}</Text>
+                <Image
+                  source={icon}
+                  style={[
+                    styles.tabIcon,
+                    {
+                      tintColor:
+                        index === activeTab
+                          ? theme.buttonTextColor
+                          : theme.textColor,
+                    },
+                  ]}
+                />
+                <Text
+                  style={[
+                    styles.tabText,
+                    {
+                      color:
+                        index === activeTab
+                          ? theme.buttonTextColor
+                          : theme.textColor,
+                    },
+                  ]}
+                >
+                  {name}
+                </Text>
               </TouchableOpacity>
             );
           })}
@@ -225,7 +332,16 @@ const MapScreen = ({ navigation }) => {
   function renderFavoriteCandidate() {
     return (
       <View style={styles.mainCont}>
-        <Text style={styles.heading}>Favorite Candidate</Text>
+        <Text
+          style={[
+            styles.heading,
+            {
+              color: theme.textColor,
+            },
+          ]}
+        >
+          Favorite Candidate
+        </Text>
         <FlatList
           contentContainerStyle={styles.flatList}
           numColumns={3}
@@ -240,7 +356,10 @@ const MapScreen = ({ navigation }) => {
               key={index}
               style={[
                 styles.nameCont,
-                selectedItems.includes(item.name) && styles.selectedArtist,
+                selectedItems.includes(item.name) && {
+                  backgroundColor: theme.buttonBackground,
+                  borderWidth: 0,
+                },
                 ,
               ]}
               onPress={() => handleItemPress(item.name)}
@@ -249,6 +368,9 @@ const MapScreen = ({ navigation }) => {
                 <Text
                   style={[
                     styles.artistText,
+                    {
+                      color: theme.textColor,
+                    },
                     selectedItems.includes(item.name) &&
                       styles.selectedArtistText,
                   ]}
@@ -262,9 +384,21 @@ const MapScreen = ({ navigation }) => {
         {dummyData.favoriteCandidate.length > 5 && (
           <TouchableOpacity
             onPress={() => setShowAll(!showAll)}
-            style={styles.showAllButton}
+            style={[
+              styles.showAllButton,
+              {
+                backgroundColor: theme.buttonBackground,
+              },
+            ]}
           >
-            <Text style={styles.showAllText}>
+            <Text
+              style={[
+                styles.showAllText,
+                {
+                  color: theme.textColor,
+                },
+              ]}
+            >
               {showAll
                 ? `-${dummyData.favoriteCandidate.length - 5}`
                 : `+${dummyData.favoriteCandidate.length - 5}`}
@@ -278,7 +412,16 @@ const MapScreen = ({ navigation }) => {
   function renderEventTypes() {
     return (
       <View style={styles.mainCont}>
-        <Text style={styles.heading}>Event Types</Text>
+        <Text
+          style={[
+            styles.heading,
+            {
+              color: theme.textColor,
+            },
+          ]}
+        >
+          Event Types
+        </Text>
         <FlatList
           contentContainerStyle={styles.flatList}
           numColumns={3}
@@ -289,7 +432,10 @@ const MapScreen = ({ navigation }) => {
               key={index}
               style={[
                 styles.nameCont,
-                selectedTypes.includes(item.name) && styles.selectedArtist,
+                selectedTypes.includes(item.name) && {
+                  backgroundColor: theme.buttonBackground,
+                  borderWidth: 0,
+                },
                 ,
               ]}
               onPress={() => handleTypePress(item.name)}
@@ -298,6 +444,9 @@ const MapScreen = ({ navigation }) => {
                 <Text
                   style={[
                     styles.artistText,
+                    {
+                      color: theme.textColor,
+                    },
                     selectedTypes.includes(item.name) &&
                       styles.selectedArtistText,
                   ]}
@@ -320,23 +469,37 @@ const MapScreen = ({ navigation }) => {
         snapPoints={snapPoints}
         onChange={handleSheetChanges}
         enablePanDownToClose={true}
-        backgroundStyle={styles.backgroundStyle}
+        backgroundStyle={[
+          styles.backgroundStyle,
+          {
+            backgroundColor: theme.bottomSheetColor,
+          },
+        ]}
       >
         <View
           style={[
             styles.contentContainer,
             {
-              backgroundColor: colors.white,
+              backgroundColor: theme.bottomSheetColor,
             },
           ]}
         >
           <View style={styles.filterLayout}>
-            <Text style={styles.selectText}>Filter</Text>
+            <Text
+              style={[
+                styles.selectText,
+                {
+                  color: theme.textColor,
+                },
+              ]}
+            >
+              Filter
+            </Text>
             <MaterialIcons
               onPress={() => setShowFilterModal(false)}
               name="highlight-remove"
               size={24}
-              color="black"
+              color={theme.textColor}
             />
           </View>
           <ScrollView
@@ -359,7 +522,7 @@ const MapScreen = ({ navigation }) => {
       style={[
         styles.container,
         {
-          backgroundColor: theme.background,
+          backgroundColor: theme.background2,
         },
       ]}
     >

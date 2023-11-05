@@ -1,4 +1,10 @@
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  useColorScheme,
+} from "react-native";
 import React from "react";
 import {
   moderateScale,
@@ -6,7 +12,7 @@ import {
   textScale,
   verticalScale,
 } from "../constants/responsiveSizes";
-import colors from "../constants/colors";
+import colors, { darkTheme, lightTheme } from "../constants/colors";
 
 const SettingComponents = ({
   title,
@@ -17,10 +23,28 @@ const SettingComponents = ({
   label1Key,
   label2Key,
 }) => {
+  const colorScheme = useColorScheme();
+  const theme = colorScheme === "light" ? lightTheme : darkTheme;
   return (
     <View style={styles.container}>
-      <Text style={styles.titleStyle}>{title}</Text>
-      <View style={styles.switchContainer}>
+      <Text
+        style={[
+          styles.titleStyle,
+          {
+            color: theme.textColor,
+          },
+        ]}
+      >
+        {title}
+      </Text>
+      <View
+        style={[
+          styles.switchContainer,
+          {
+            backgroundColor: theme.backgroundColor,
+          },
+        ]}
+      >
         <TouchableOpacity
           onPress={onPressLabel1}
           activeOpacity={0.8}
@@ -28,7 +52,7 @@ const SettingComponents = ({
             styles.container1,
             {
               backgroundColor: label1Key
-                ? colors.buttonBackground
+                ? theme.buttonBackground
                 : colors.white,
             },
           ]}
@@ -51,7 +75,7 @@ const SettingComponents = ({
             styles.container2,
             {
               backgroundColor: label2Key
-                ? colors.buttonBackground
+                ? theme.buttonBackground
                 : colors.white,
             },
           ]}

@@ -1,4 +1,10 @@
-import { View, Text, FlatList, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  FlatList,
+  TouchableOpacity,
+  useColorScheme,
+} from "react-native";
 import React from "react";
 import styles from "./styles";
 import { Ionicons } from "@expo/vector-icons";
@@ -6,8 +12,11 @@ import { Image } from "expo-image";
 import imagePath from "../../../constants/imagePath";
 import dummyData from "../../../constants/dummyData";
 import navigationStrings from "../../../constants/navigationStrings";
+import { darkTheme, lightTheme } from "../../../constants/colors";
 
 const MyEvents = ({ navigation }) => {
+  const colorScheme = useColorScheme();
+  const theme = colorScheme === "light" ? lightTheme : darkTheme;
   function renderHeader() {
     return (
       <View style={styles.header}>
@@ -15,10 +24,19 @@ const MyEvents = ({ navigation }) => {
           onPress={() => navigation.goBack()}
           name="arrow-back"
           size={24}
-          color="black"
+          color={theme.textColor}
         />
         <View style={styles.eventStyle}>
-          <Text style={styles.heading}>My Events</Text>
+          <Text
+            style={[
+              styles.heading,
+              {
+                color: theme.textColor,
+              },
+            ]}
+          >
+            My Events
+          </Text>
         </View>
       </View>
     );
@@ -39,7 +57,12 @@ const MyEvents = ({ navigation }) => {
                 })
               }
               activeOpacity={0.8}
-              style={styles.card}
+              style={[
+                styles.card,
+                {
+                  backgroundColor: theme.background,
+                },
+              ]}
             >
               <View style={styles.cardImage}>
                 <Image
@@ -53,8 +76,25 @@ const MyEvents = ({ navigation }) => {
               </View>
 
               <View style={styles.cardText}>
-                <Text style={styles.cardTitle}>{item.name}</Text>
-                <Text numberOfLines={2} style={styles.cardSubTitle}>
+                <Text
+                  style={[
+                    styles.cardTitle,
+                    {
+                      color: theme.textColor,
+                    },
+                  ]}
+                >
+                  {item.name}
+                </Text>
+                <Text
+                  numberOfLines={2}
+                  style={[
+                    styles.cardSubTitle,
+                    {
+                      color: theme.textColor,
+                    },
+                  ]}
+                >
                   {item.description}
                 </Text>
               </View>
@@ -65,7 +105,14 @@ const MyEvents = ({ navigation }) => {
     );
   }
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        {
+          backgroundColor: theme.background,
+        },
+      ]}
+    >
       {renderHeader()}
       {renderListOfEvents()}
     </View>

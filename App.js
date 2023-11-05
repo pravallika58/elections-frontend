@@ -18,7 +18,7 @@ const App = () => {
   return (
     <View style={styles.container}>
       <Routes />
-      <StatusBar style="auto" />
+      <StatusBar style="dark" />
     </View>
   );
 };

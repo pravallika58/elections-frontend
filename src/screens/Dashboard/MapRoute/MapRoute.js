@@ -1,4 +1,10 @@
-import { View, Text, TouchableOpacity, Image } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  useColorScheme,
+} from "react-native";
 import React from "react";
 import styles from "./styles";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
@@ -9,8 +15,15 @@ import {
   verticalScale,
 } from "../../../constants/responsiveSizes";
 import imagePath from "../../../constants/imagePath";
+import {
+  darkTheme,
+  lightTheme,
+  mapCustomStyle,
+} from "../../../constants/colors";
 
 const MapRoute = ({ navigation }) => {
+  const colorScheme = useColorScheme();
+  const theme = colorScheme === "light" ? lightTheme : darkTheme;
   function renderHeader() {
     return (
       <Header
@@ -27,7 +40,14 @@ const MapRoute = ({ navigation }) => {
     );
   }
   return (
-    <View style={styles.MapStyle}>
+    <View
+      style={[
+        styles.MapStyle,
+        {
+          backgroundColor: theme.background,
+        },
+      ]}
+    >
       {renderHeader()}
       <MapView
         style={styles.MapStyle}
@@ -37,9 +57,17 @@ const MapRoute = ({ navigation }) => {
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}
+        customMapStyle={colorScheme === "light" ? [] : mapCustomStyle}
         provider={PROVIDER_GOOGLE}
       ></MapView>
-      <View style={styles.mapPinContainer}>
+      <View
+        style={[
+          styles.mapPinContainer,
+          {
+            backgroundColor: theme.background,
+          },
+        ]}
+      >
         <Image source={imagePath.icPin} style={styles.pinStyle} />
       </View>
     </View>

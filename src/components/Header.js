@@ -1,4 +1,11 @@
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  useColorScheme,
+} from "react-native";
 import React from "react";
 import {
   moderateScale,
@@ -7,7 +14,7 @@ import {
   verticalScale,
 } from "../constants/responsiveSizes";
 import imagePath from "../constants/imagePath";
-import colors from "../constants/colors";
+import colors, { darkTheme, lightTheme } from "../constants/colors";
 
 const Header = ({
   label,
@@ -18,13 +25,20 @@ const Header = ({
   location,
   locationText,
 }) => {
+  const colorScheme = useColorScheme();
+  const theme = colorScheme === "light" ? lightTheme : darkTheme;
   return (
     <View style={[styles.headerContainer, customHeaderContainer]}>
       {showRightArrow ? (
         <TouchableOpacity onPress={onPressArrow} activeOpacity={0.8}>
           <Image
             source={imagePath.icRightArrow}
-            style={styles.rightArrowStyle}
+            style={[
+              styles.rightArrowStyle,
+              {
+                tintColor: theme.textColor,
+              },
+            ]}
           />
         </TouchableOpacity>
       ) : null}
@@ -33,14 +47,24 @@ const Header = ({
           flex: 1,
         }}
       >
-        <Text style={[styles.labelStyle, customLabelStyle]}>{label}</Text>
+        <Text
+          style={[
+            styles.labelStyle,
+            customLabelStyle,
+            {
+              color: theme.textColor,
+            },
+          ]}
+        >
+          {label}
+        </Text>
         {location ? (
           <Text
             style={{
               fontSize: textScale(14),
               fontFamily: "C-Regular",
               textAlign: "center",
-              color: colors.black,
+              color: theme.textColor,
             }}
           >
             {locationText}

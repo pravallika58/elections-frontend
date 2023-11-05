@@ -59,6 +59,8 @@ const LocationAccess = ({ navigation }) => {
             },
             textInput: {
               fontSize: textScale(15),
+              backgroundColor: theme.bottomSheetColor,
+              color: theme.textColor,
             },
           }}
           fetchDetails={true}
@@ -83,7 +85,16 @@ const LocationAccess = ({ navigation }) => {
             key={item.id}
           >
             <View>
-              <Text style={styles.titleStyle}>{item.title}</Text>
+              <Text
+                style={[
+                  styles.titleStyle,
+                  {
+                    color: theme.textColor,
+                  },
+                ]}
+              >
+                {item.title}
+              </Text>
               <Text
                 style={[
                   styles.subTitleStyle,
@@ -100,6 +111,7 @@ const LocationAccess = ({ navigation }) => {
               style={styles.checkbox}
               value={checkedItems[index]}
               onValueChange={() => handleCheckboxChange(index)}
+              color={theme.buttonBackground}
             />
           </TouchableOpacity>
         ))}
@@ -131,7 +143,16 @@ const LocationAccess = ({ navigation }) => {
           showTick={false}
         />
         <View style={styles.favoriteStyleCont}>
-          <Text style={styles.favoriteStyle}>Favorites</Text>
+          <Text
+            style={[
+              styles.favoriteStyle,
+              {
+                color: theme.textColor,
+              },
+            ]}
+          >
+            Favorites
+          </Text>
           <CustomButton
             customStyles={{
               width: moderateScale(85),

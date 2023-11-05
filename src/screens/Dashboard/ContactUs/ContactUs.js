@@ -51,28 +51,50 @@ const ContactUs = ({ navigation }) => {
       {renderHeader()}
       <KeyboardAwareScrollView style={styles.container}>
         <View style={styles.description}>
-          <Text style={styles.heading}>Contact Us</Text>
-          <Text style={styles.subHeading}>
+          <Text
+            style={[
+              styles.heading,
+              {
+                color: theme.textColor,
+              },
+            ]}
+          >
+            Contact Us
+          </Text>
+          <Text
+            style={[
+              styles.subHeading,
+              {
+                color: theme.textColor,
+              },
+            ]}
+          >
             Have a question or feedback about Ourvote application? We would love
             to hear from you. please fill out the form below
           </Text>
         </View>
-        <Text style={styles.label}>Email</Text>
+
         <Input
+          label={"Email"}
           placeholder="e.g. email@example.com"
           value={email}
           onChangeText={(text) => setEmail(text)}
           keyboardType={"email-address"}
         />
-        <Text style={styles.label}>Subject</Text>
+
         <Input
+          label={"Subject"}
           placeholder="e.g support"
           value={subject}
           onChangeText={(text) => setSubject(text)}
           keyboardType={"default"}
+          customContainerStyle={{
+            marginTop: verticalScale(20),
+          }}
         />
-        <Text style={styles.label}>Your Message</Text>
+
         <Input
+          label={"Details"}
           placeholder="Enter the text here."
           value={details}
           multiline={true}
@@ -80,6 +102,9 @@ const ContactUs = ({ navigation }) => {
           styleInput={{
             height: moderateScale(155),
             paddingTop: verticalScale(14),
+          }}
+          customContainerStyle={{
+            marginTop: verticalScale(20),
           }}
         />
       </KeyboardAwareScrollView>

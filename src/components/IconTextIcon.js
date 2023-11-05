@@ -1,4 +1,11 @@
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  useColorScheme,
+} from "react-native";
 import React from "react";
 import {
   moderateScale,
@@ -7,6 +14,7 @@ import {
   verticalScale,
 } from "../constants/responsiveSizes";
 import imagePath from "../constants/imagePath";
+import { darkTheme, lightTheme } from "../constants/colors";
 
 const IconTextIcon = ({
   label,
@@ -16,11 +24,22 @@ const IconTextIcon = ({
   subLabel,
   showTick,
 }) => {
+  const colorScheme = useColorScheme();
+  const theme = colorScheme === "light" ? lightTheme : darkTheme;
   return (
     <TouchableOpacity style={[styles.container, customContainerStyle]}>
       <Image source={imagePath.icShare} style={styles.shareStyle} />
       <View style={{ flex: 1 }}>
-        <Text style={styles.labelStyle}>{label}</Text>
+        <Text
+          style={[
+            styles.labelStyle,
+            {
+              color: theme.textColor,
+            },
+          ]}
+        >
+          {label}
+        </Text>
         {moreinfo && (
           <>
             <Text
@@ -50,7 +69,15 @@ const IconTextIcon = ({
         )}
       </View>
       {showTick && (
-        <Image source={imagePath.icTick} style={styles.shareStyle} />
+        <Image
+          source={imagePath.icTick}
+          style={[
+            styles.shareStyle,
+            {
+              tintColor: theme.buttonBackground,
+            },
+          ]}
+        />
       )}
     </TouchableOpacity>
   );

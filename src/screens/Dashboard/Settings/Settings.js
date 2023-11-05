@@ -97,7 +97,7 @@ const Settings = ({ navigation }) => {
           onPressLabel1={onPressDefault}
           onPressLabel2={onPressSatellite}
         />
-        <SettingComponents
+        {/* <SettingComponents
           title="Units"
           label1="Miles"
           label2="Meters"
@@ -105,8 +105,8 @@ const Settings = ({ navigation }) => {
           label2Key={metersKey}
           onPressLabel1={onPressMiles}
           onPressLabel2={onPressMeters}
-        />
-        <SettingComponents
+        /> */}
+        {/* <SettingComponents
           title="Display Mode"
           label1="Light"
           label2="Dark"
@@ -114,8 +114,8 @@ const Settings = ({ navigation }) => {
           label2Key={darkKey}
           onPressLabel1={onPressLight}
           onPressLabel2={onPressDark}
-        />
-        <SettingComponents
+        /> */}
+        {/* <SettingComponents
           title="Boundaries"
           label1="Countries"
           label2="States"
@@ -123,7 +123,7 @@ const Settings = ({ navigation }) => {
           label2Key={statesKey}
           onPressLabel1={onPressCountries}
           onPressLabel2={onPressStates}
-        />
+        /> */}
       </>
     );
   }

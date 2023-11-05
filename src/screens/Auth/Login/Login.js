@@ -63,7 +63,16 @@ const Login = ({ navigation }) => {
           activeOpacity={0.8}
           onPress={() => navigation.navigate(navigationStrings.FORGOT_PASSWORD)}
         >
-          <Text style={styles.forgotText}>Forgot Password?</Text>
+          <Text
+            style={[
+              styles.forgotText,
+              {
+                color: theme.textColor,
+              },
+            ]}
+          >
+            Forgot Password?
+          </Text>
         </TouchableOpacity>
         <CustomButton
           label="Login"

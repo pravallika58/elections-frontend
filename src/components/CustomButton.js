@@ -1,4 +1,10 @@
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  useColorScheme,
+} from "react-native";
 import React from "react";
 import {
   moderateScale,
@@ -6,16 +12,33 @@ import {
   textScale,
   verticalScale,
 } from "../constants/responsiveSizes";
-import colors from "../constants/colors";
+import colors, { darkTheme, lightTheme } from "../constants/colors";
 
 const CustomButton = ({ customStyles, label, onPress }) => {
+  const colorScheme = useColorScheme();
+  const theme = colorScheme === "light" ? lightTheme : darkTheme;
   return (
     <TouchableOpacity
       activeOpacity={0.8}
       onPress={onPress}
-      style={[styles.buttonContainer, customStyles]}
+      style={[
+        styles.buttonContainer,
+        customStyles,
+        {
+          backgroundColor: theme.buttonBackground,
+        },
+      ]}
     >
-      <Text style={styles.labelStyle}>{label}</Text>
+      <Text
+        style={[
+          styles.labelStyle,
+          {
+            color: colors.white,
+          },
+        ]}
+      >
+        {label}
+      </Text>
     </TouchableOpacity>
   );
 };

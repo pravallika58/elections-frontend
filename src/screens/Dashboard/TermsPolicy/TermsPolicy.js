@@ -50,7 +50,14 @@ const TermsPolicy = ({ navigation }) => {
         {dummyData.PrivacyPolicy.map((item, index) => {
           return (
             <View style={styles.description}>
-              <Text style={styles.contentText}>
+              <Text
+                style={[
+                  styles.contentText,
+                  {
+                    color: theme.textColor,
+                  },
+                ]}
+              >
                 {index + 1}: {item.description}
               </Text>
             </View>
@@ -72,9 +79,19 @@ const TermsPolicy = ({ navigation }) => {
       {renderHeader()}
 
       <View style={styles.bigTitleCont}>
-        <Text style={styles.bigTitle}>Terms of use & Privacy Policy</Text>
+        <Text
+          style={[
+            styles.bigTitle,
+            {
+              color: theme.textColor,
+            },
+          ]}
+        >
+          Terms of use & Privacy Policy
+        </Text>
       </View>
       <ScrollView
+        showsVerticalScrollIndicator={false}
         style={{
           flex: 1,
         }}

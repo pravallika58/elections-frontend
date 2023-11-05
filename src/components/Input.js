@@ -1,4 +1,10 @@
-import { View, Text, StyleSheet, TextInput } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  useColorScheme,
+} from "react-native";
 import React from "react";
 import {
   moderateScale,
@@ -6,7 +12,7 @@ import {
   textScale,
   verticalScale,
 } from "../constants/responsiveSizes";
-import colors from "../constants/colors";
+import colors, { darkTheme, lightTheme } from "../constants/colors";
 
 const Input = ({
   placeholder,
@@ -20,9 +26,20 @@ const Input = ({
   customContainerStyle,
   onFocus,
 }) => {
+  const colorScheme = useColorScheme();
+  const theme = colorScheme === "light" ? lightTheme : darkTheme;
   return (
     <View style={[styles.container, customContainerStyle]}>
-      <Text style={styles.labelStyle}>{label}</Text>
+      <Text
+        style={[
+          styles.labelStyle,
+          {
+            color: theme.textColor,
+          },
+        ]}
+      >
+        {label}
+      </Text>
       <TextInput
         multiline={multiline}
         placeholder={placeholder}
@@ -30,7 +47,14 @@ const Input = ({
         secureTextEntry={secureTextEntry}
         onChangeText={onChangeText}
         value={value}
-        style={[styles.inputStyle, styleInput]}
+        style={[
+          styles.inputStyle,
+          styleInput,
+          {
+            backgroundColor: theme.inputContainer,
+            color: theme.textColor,
+          },
+        ]}
         onFocus={onFocus}
       />
     </View>
@@ -44,15 +68,12 @@ const styles = StyleSheet.create({
   inputStyle: {
     fontSize: textScale(16),
     fontFamily: "C-Regular",
-    backgroundColor: colors.white,
     borderRadius: moderateScale(24),
     padding: moderateScale(9),
-    color: colors.black,
   },
   labelStyle: {
     fontSize: textScale(20),
     fontFamily: "C-Regular",
-    color: colors.black,
     fontWeight: "700",
     paddingBottom: verticalScale(10),
     paddingLeft: scale(4),

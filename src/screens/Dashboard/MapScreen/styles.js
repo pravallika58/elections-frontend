@@ -23,6 +23,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   headerAgain: {
+    position: "absolute",
+    top: 0,
+    paddingTop: verticalScale(35),
+    paddingBottom: verticalScale(25),
+    paddingHorizontal: scale(16),
+    width: "100%",
+    justifyContent: "space-between",
     flexDirection: "row",
     alignItems: "center",
   },
@@ -50,6 +57,7 @@ const styles = StyleSheet.create({
   footer: {
     height: moderateScale(95),
     backgroundColor: colors.white,
+    borderRadius: moderateScale(40),
   },
   tabContainer: {
     flexDirection: "row",
@@ -59,23 +67,8 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     marginTop: verticalScale(10),
   },
-  tab: {
-    width: moderateScale(59),
-    height: moderateScale(53),
-    // justifyContent: "center",
-    alignItems: "center",
-    borderRadius: moderateScale(8),
-    backgroundColor: colors.white,
-  },
-  tabPressed: {
-    padding: moderateScale(8),
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: moderateScale(8),
-    backgroundColor: colors.tabPressed,
-  },
+
   tabText: {
-    color: colors.black,
     fontSize: textScale(10),
     fontWeight: "600",
     fontFamily: "C-Regular",
@@ -133,11 +126,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  backgroundStyle: {
-    backgroundColor: colors.white,
-    borderWidth: 0.5,
-    borderColor: "grey",
-  },
+
   selectText: {
     fontSize: textScale(20),
     fontFamily: "C-Bold",

@@ -2,27 +2,32 @@ import * as React from "react";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import navigationStrings from "../constants/navigationStrings";
 import * as Screens from "../screens";
-import { Image } from "react-native";
+import { Image, useColorScheme } from "react-native";
 import imagePath from "../constants/imagePath";
 import styles from "../screens/Auth/Login/styles";
-import colors from "../constants/colors";
+import colors, { darkTheme, lightTheme } from "../constants/colors";
+import { textScale } from "../constants/responsiveSizes";
 
 const Drawer = createDrawerNavigator();
 
 const CustomDrawer = () => {
+  const colorScheme = useColorScheme();
+  const theme = colorScheme === "light" ? lightTheme : darkTheme;
   return (
     <Drawer.Navigator
       screenOptions={{
         headerShown: false,
+
         drawerStyle: {
-          backgroundColor: colors.background,
+          backgroundColor: theme.background,
           width: "80%",
         },
         drawerActiveTintColor: colors.buttonBackground,
         drawerInactiveTintColor: colors.black,
         drawerLabelStyle: {
-          fontSize: 16,
+          fontSize: textScale(16),
           fontFamily: "C-Regular",
+          color: theme.textColor,
         },
       }}
     >
@@ -35,7 +40,12 @@ const CustomDrawer = () => {
             return (
               <Image
                 source={imagePath.icLocation}
-                style={styles.drawerIcon}
+                style={[
+                  styles.drawerIcon,
+                  {
+                    tintColor: theme.textColor,
+                  },
+                ]}
                 resizeMode="contain"
               />
             );
@@ -50,7 +60,12 @@ const CustomDrawer = () => {
             return (
               <Image
                 source={imagePath.icFireWorks}
-                style={styles.drawerIcon}
+                style={[
+                  styles.drawerIcon,
+                  {
+                    tintColor: theme.textColor,
+                  },
+                ]}
                 resizeMode="contain"
               />
             );
@@ -66,7 +81,12 @@ const CustomDrawer = () => {
             return (
               <Image
                 source={imagePath.icCheers}
-                style={styles.drawerIcon}
+                style={[
+                  styles.drawerIcon,
+                  {
+                    tintColor: theme.textColor,
+                  },
+                ]}
                 resizeMode="contain"
               />
             );
@@ -81,7 +101,12 @@ const CustomDrawer = () => {
             return (
               <Image
                 source={imagePath.icProfile}
-                style={styles.drawerIcon}
+                style={[
+                  styles.drawerIcon,
+                  {
+                    tintColor: theme.textColor,
+                  },
+                ]}
                 resizeMode="contain"
               />
             );
@@ -96,7 +121,12 @@ const CustomDrawer = () => {
             return (
               <Image
                 source={imagePath.icContribution}
-                style={styles.drawerIcon}
+                style={[
+                  styles.drawerIcon,
+                  {
+                    tintColor: theme.textColor,
+                  },
+                ]}
                 resizeMode="contain"
               />
             );
@@ -111,7 +141,12 @@ const CustomDrawer = () => {
             return (
               <Image
                 source={imagePath.icSettings}
-                style={styles.drawerIcon}
+                style={[
+                  styles.drawerIcon,
+                  {
+                    tintColor: theme.textColor,
+                  },
+                ]}
                 resizeMode="contain"
               />
             );
@@ -126,7 +161,12 @@ const CustomDrawer = () => {
             return (
               <Image
                 source={imagePath.icNews}
-                style={styles.drawerIcon}
+                style={[
+                  styles.drawerIcon,
+                  {
+                    tintColor: theme.textColor,
+                  },
+                ]}
                 resizeMode="contain"
               />
             );
@@ -143,7 +183,12 @@ const CustomDrawer = () => {
             return (
               <Image
                 source={imagePath.icContactUs}
-                style={styles.drawerIcon}
+                style={[
+                  styles.drawerIcon,
+                  {
+                    tintColor: theme.textColor,
+                  },
+                ]}
                 resizeMode="contain"
               />
             );
@@ -159,7 +204,12 @@ const CustomDrawer = () => {
             return (
               <Image
                 source={imagePath.icFAQ}
-                style={styles.drawerIcon}
+                style={[
+                  styles.drawerIcon,
+                  {
+                    tintColor: theme.textColor,
+                  },
+                ]}
                 resizeMode="contain"
               />
             );
@@ -175,14 +225,19 @@ const CustomDrawer = () => {
             return (
               <Image
                 source={imagePath.icStar}
-                style={styles.drawerIcon}
+                style={[
+                  styles.drawerIcon,
+                  {
+                    tintColor: theme.textColor,
+                  },
+                ]}
                 resizeMode="contain"
               />
             );
           },
         }}
       />
-      <Drawer.Screen
+      {/* <Drawer.Screen
         name={navigationStrings.SHARE_APP}
         component={Screens.ShareApp}
         options={{
@@ -191,13 +246,18 @@ const CustomDrawer = () => {
             return (
               <Image
                 source={imagePath.icShare2}
-                style={styles.drawerIcon}
+ style={[
+                  styles.drawerIcon,
+                  {
+                    tintColor: theme.textColor,
+                  },
+                ]}
                 resizeMode="contain"
               />
             );
           },
         }}
-      />
+      /> */}
       <Drawer.Screen
         name={navigationStrings.ABOUT_ELECTIONS}
         component={Screens.AboutElections}
@@ -207,7 +267,12 @@ const CustomDrawer = () => {
             return (
               <Image
                 source={imagePath.icInfo}
-                style={styles.drawerIcon}
+                style={[
+                  styles.drawerIcon,
+                  {
+                    tintColor: theme.textColor,
+                  },
+                ]}
                 resizeMode="contain"
               />
             );
@@ -223,7 +288,12 @@ const CustomDrawer = () => {
             return (
               <Image
                 source={imagePath.icContract}
-                style={styles.drawerIcon}
+                style={[
+                  styles.drawerIcon,
+                  {
+                    tintColor: theme.textColor,
+                  },
+                ]}
                 resizeMode="contain"
               />
             );

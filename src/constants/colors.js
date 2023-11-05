@@ -1,5 +1,4 @@
 export default {
-  buttonBackground: "#212b81",
   red: "#7a2924",
   white: "#fff",
   black: "#000",
@@ -15,14 +14,25 @@ export default {
 
 export const lightTheme = {
   background: "#dee5f2",
+  background2: "#ffffff",
   textColor: "#000000",
+
   inputContainer: "#FFFFFF",
+  buttonBackground: "#212b81",
+  buttonTextColor: "#ffffff",
+  bottomSheetColor: "#ffffff",
+  topBottomColor: "#ffffff",
 };
 
 export const darkTheme = {
-  background: "#27374D",
+  background: "#2d2d2d",
+  background2: "#2d2d2d",
   textColor: "#ffffff",
-  inputContainer: "#DDE6ED",
+  inputContainer: "#414141",
+  buttonBackground: "#212b81",
+  buttonTextColor: "#000000",
+  bottomSheetColor: "#414141",
+  topBottomColor: "#424242",
 };
 
 export const mapCustomStyle = [

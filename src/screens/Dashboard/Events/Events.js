@@ -8,7 +8,11 @@ import {
 } from "react-native";
 import React, { useCallback, useMemo, useRef, useState } from "react";
 import styles from "./styles";
-import colors, { darkTheme, lightTheme } from "../../../constants/colors";
+import colors, {
+  darkTheme,
+  lightTheme,
+  mapCustomStyle,
+} from "../../../constants/colors";
 import Header from "../../../components/Header";
 import Input from "../../../components/Input";
 import imagePath from "../../../constants/imagePath";
@@ -98,11 +102,36 @@ const Events = ({ navigation }) => {
 
   function renderWhenEvent() {
     return (
-      <View style={styles.mainContainer}>
-        <Text style={styles.whenEvent}>When is your event?</Text>
+      <View
+        style={[
+          styles.mainContainer,
+          {
+            backgroundColor: theme.inputContainer,
+          },
+        ]}
+      >
+        <Text
+          style={[
+            styles.whenEvent,
+            {
+              color: theme.textColor,
+            },
+          ]}
+        >
+          When is your event?
+        </Text>
         <View style={styles.selectDateContainer}>
           <View>
-            <Text style={styles.labelStyle}>Start Date</Text>
+            <Text
+              style={[
+                styles.labelStyle,
+                {
+                  color: theme.textColor,
+                },
+              ]}
+            >
+              Start Date
+            </Text>
             <DateTimePicker
               testID="dateTimePicker"
               value={startDate}
@@ -113,7 +142,16 @@ const Events = ({ navigation }) => {
             />
           </View>
           <View>
-            <Text style={styles.labelStyle}>End Date</Text>
+            <Text
+              style={[
+                styles.labelStyle,
+                {
+                  color: theme.textColor,
+                },
+              ]}
+            >
+              End Date
+            </Text>
             <DateTimePicker
               testID="dateTimePicker"
               value={endDate}
@@ -124,14 +162,45 @@ const Events = ({ navigation }) => {
             />
           </View>
         </View>
-        <Text style={styles.orStyle}>OR</Text>
+        <Text
+          style={[
+            styles.orStyle,
+            {
+              color: theme.textColor,
+            },
+          ]}
+        >
+          OR
+        </Text>
         <View style={styles.permanentCont}>
-          <Text style={styles.permanentTextStyle}>Permanent</Text>
-          <Checkbox value={permanent} onValueChange={setPermanent} />
+          <Text
+            style={[
+              styles.permanentTextStyle,
+              {
+                color: theme.textColor,
+              },
+            ]}
+          >
+            Permanent
+          </Text>
+          <Checkbox
+            value={permanent}
+            onValueChange={setPermanent}
+            color={theme.buttonBackground}
+          />
         </View>
         <View style={styles.selectDateContainer}>
           <View>
-            <Text style={styles.labelStyle}>Start Time</Text>
+            <Text
+              style={[
+                styles.labelStyle,
+                {
+                  color: theme.textColor,
+                },
+              ]}
+            >
+              Start Time
+            </Text>
             <DateTimePicker
               testID="dateTimePicker"
               value={startTime}
@@ -142,7 +211,16 @@ const Events = ({ navigation }) => {
             />
           </View>
           <View>
-            <Text style={styles.labelStyle}>End Time</Text>
+            <Text
+              style={[
+                styles.labelStyle,
+                {
+                  color: theme.textColor,
+                },
+              ]}
+            >
+              End Time
+            </Text>
             <DateTimePicker
               testID="dateTimePicker"
               value={endTime}
@@ -190,7 +268,16 @@ const Events = ({ navigation }) => {
           />
         </View>
 
-        <Text style={styles.orStyle}>OR</Text>
+        <Text
+          style={[
+            styles.orStyle,
+            {
+              color: theme.textColor,
+            },
+          ]}
+        >
+          OR
+        </Text>
         <Input
           customContainerStyle={styles.customContainerStyle1}
           label={"Latitude"}
@@ -220,7 +307,16 @@ const Events = ({ navigation }) => {
   function renderMap() {
     return (
       <>
-        <Text style={styles.mapText}>Map</Text>
+        <Text
+          style={[
+            styles.mapText,
+            {
+              color: theme.textColor,
+            },
+          ]}
+        >
+          Map
+        </Text>
         <MapView
           region={{
             latitude: 37.78825,
@@ -228,6 +324,7 @@ const Events = ({ navigation }) => {
             latitudeDelta: 0.015,
             longitudeDelta: 0.0121,
           }}
+          customMapStyle={colorScheme === "light" ? [] : mapCustomStyle}
           provider={PROVIDER_GOOGLE}
           style={styles.mapStyle}
         />
@@ -238,25 +335,87 @@ const Events = ({ navigation }) => {
   function renderFeatureImage() {
     return (
       <>
-        <Text style={styles.featureText}>Feature Image for Event</Text>
-        <View style={styles.chooseFileContainer}>
+        <Text
+          style={[
+            styles.featureText,
+            {
+              color: theme.textColor,
+            },
+          ]}
+        >
+          Feature Image for Event
+        </Text>
+        <View
+          style={[
+            styles.chooseFileContainer,
+            {
+              backgroundColor: theme.inputContainer,
+            },
+          ]}
+        >
           <TouchableOpacity
             activeOpacity={0.8}
             onPress={pickFeatureImage}
-            style={styles.part1}
+            style={[
+              styles.part1,
+              {
+                backgroundColor: theme.inputContainer,
+              },
+            ]}
           >
-            <Text style={styles.textStyle}>Choose File</Text>
+            <Text
+              style={[
+                styles.textStyle,
+                {
+                  color: theme.textColor,
+                },
+              ]}
+            >
+              Choose File
+            </Text>
           </TouchableOpacity>
-          <View style={styles.part2}>
+          <View
+            style={[
+              styles.part2,
+              {
+                backgroundColor: theme.inputContainer,
+              },
+            ]}
+          >
             {featureImage ? (
-              <Text style={styles.textStyle}>{featureImage.fileName}</Text>
+              <Text
+                style={[
+                  styles.textStyle,
+                  {
+                    color: theme.textColor,
+                  },
+                ]}
+              >
+                {featureImage.fileName}
+              </Text>
             ) : (
-              <Text style={styles.textStyle}>No file selected</Text>
+              <Text
+                style={[
+                  styles.textStyle,
+                  {
+                    color: theme.textColor,
+                  },
+                ]}
+              >
+                No file selected
+              </Text>
             )}
           </View>
         </View>
         <View style={styles.infoContainer}>
-          <Text style={styles.infoText}>
+          <Text
+            style={[
+              styles.infoText,
+              {
+                color: theme.textColor,
+              },
+            ]}
+          >
             Accepted File types : jpg, jpeg, png, gifMax file size : 3MB
           </Text>
         </View>
@@ -267,10 +426,27 @@ const Events = ({ navigation }) => {
   function renderUpto4Images() {
     return (
       <>
-        <Text style={styles.featureText}>Add up to four more Images</Text>
+        <Text
+          style={[
+            styles.featureText,
+            {
+              color: theme.textColor,
+            },
+          ]}
+        >
+          Add up to four more Images
+        </Text>
         <View style={styles.imageContainer}>
           <TouchableOpacity activeOpacity={0.8} onPress={pickImage}>
-            <Image source={imagePath.icCamera} style={styles.cameraIconStyle} />
+            <Image
+              source={imagePath.icCamera}
+              style={[
+                styles.cameraIconStyle,
+                {
+                  tintColor: theme.textColor,
+                },
+              ]}
+            />
           </TouchableOpacity>
           {images.map((image, index) => (
             <Image
@@ -294,10 +470,32 @@ const Events = ({ navigation }) => {
         />
         <TouchableOpacity
           onPress={() => setShowBottomSheet(true)}
-          style={styles.chooseType}
+          style={[
+            styles.chooseType,
+            {
+              backgroundColor: theme.inputContainer,
+            },
+          ]}
         >
-          <Text style={styles.typeArtEventText}>{typeArtEvent}</Text>
-          <Image source={imagePath.icDownArrow} style={styles.iconStyle} />
+          <Text
+            style={[
+              styles.typeArtEventText,
+              {
+                color: theme.textColor,
+              },
+            ]}
+          >
+            {typeArtEvent}
+          </Text>
+          <Image
+            source={imagePath.icDownArrow}
+            style={[
+              styles.iconStyle,
+              {
+                tintColor: theme.textColor,
+              },
+            ]}
+          />
         </TouchableOpacity>
         {renderWhenEvent()}
         {renderEventAddress()}
@@ -329,20 +527,27 @@ const Events = ({ navigation }) => {
         onChange={handleSheetChanges}
         enablePanDownToClose={true}
         backgroundStyle={{
-          backgroundColor: colors.white,
-          borderWidth: 0.5,
-          borderColor: "grey",
+          backgroundColor: theme.bottomSheetColor,
         }}
       >
         <View
           style={[
             styles.contentContainer,
             {
-              backgroundColor: colors.white,
+              backgroundColor: theme.bottomSheetColor,
             },
           ]}
         >
-          <Text style={styles.selectText}>Select Type Of Art Event</Text>
+          <Text
+            style={[
+              styles.selectText,
+              {
+                color: theme.textColor,
+              },
+            ]}
+          >
+            Select Type Of Art Event
+          </Text>
           {constants.typeOfArtEvent.map((item) => {
             return (
               <TouchableOpacity
@@ -353,7 +558,16 @@ const Events = ({ navigation }) => {
                 key={item.id}
                 style={styles.typeArtEventContainer}
               >
-                <Text style={styles.typeArtEventText}>{item.name}</Text>
+                <Text
+                  style={[
+                    styles.typeArtEventText,
+                    {
+                      color: theme.textColor,
+                    },
+                  ]}
+                >
+                  {item.name}
+                </Text>
               </TouchableOpacity>
             );
           })}

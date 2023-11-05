@@ -74,7 +74,14 @@ const Register = ({ navigation }) => {
 
         <CustomButton label="Register" />
         {/* Don't have an account? Sign Up */}
-        <Text style={styles.signUp}>
+        <Text
+          style={[
+            styles.signUp,
+            {
+              color: theme.textColor,
+            },
+          ]}
+        >
           Already have an account?{" "}
           <Text
             onPress={() => navigation.navigate(navigationStrings.LOGIN)}

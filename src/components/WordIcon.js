@@ -1,22 +1,56 @@
-import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  useColorScheme,
+} from "react-native";
 import React from "react";
 import { scale, textScale, verticalScale } from "../constants/responsiveSizes";
-import colors from "../constants/colors";
+import colors, { darkTheme, lightTheme } from "../constants/colors";
 import imagePath from "../constants/imagePath";
 
 const WordIcon = ({ title, label, onPress, customSubTitle }) => {
+  const colorScheme = useColorScheme();
+  const theme = colorScheme === "light" ? lightTheme : darkTheme;
   return (
     <View>
       <TouchableOpacity onPress={onPress} style={styles.barContainer}>
-        <Text style={[styles.labelStyle, customSubTitle]}>{label}</Text>
+        <Text
+          style={[
+            styles.labelStyle,
+            { color: theme.textColor },
+            customSubTitle,
+          ]}
+        >
+          {label}
+        </Text>
         <View
           style={{
             flex: 1,
           }}
         >
-          <Text style={styles.subTitle}>{title}</Text>
+          <Text
+            style={[
+              styles.subTitle,
+              {
+                color: theme.textColor,
+              },
+            ]}
+          >
+            {title}
+          </Text>
         </View>
-        <Image source={imagePath.icLeftArrow} style={styles.iconStyle} />
+        <Image
+          source={imagePath.icLeftArrow}
+          style={[
+            styles.iconStyle,
+            {
+              tintColor: theme.textColor,
+            },
+          ]}
+        />
       </TouchableOpacity>
     </View>
   );

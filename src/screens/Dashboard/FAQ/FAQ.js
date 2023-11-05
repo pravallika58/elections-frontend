@@ -20,11 +20,25 @@ const FAQ = ({ navigation }) => {
   const renderHeader2 = (section) => {
     return (
       <View style={styles.header}>
-        <Text style={styles.headerText}>{section.title}</Text>
+        <Text
+          style={[
+            styles.headerText,
+            {
+              color: theme.textColor,
+            },
+          ]}
+        >
+          {section.title}
+        </Text>
         <Image
           resizeMode="contain"
           source={imagePath.icDownArrow}
-          style={styles.downArrow}
+          style={[
+            styles.downArrow,
+            {
+              tintColor: theme.textColor,
+            },
+          ]}
         />
       </View>
     );
@@ -33,7 +47,16 @@ const FAQ = ({ navigation }) => {
   const renderContent = (section) => {
     return (
       <View style={styles.content}>
-        <Text style={styles.contentText}>{section.content}</Text>
+        <Text
+          style={[
+            styles.contentText,
+            {
+              color: theme.textColor,
+            },
+          ]}
+        >
+          {section.content}
+        </Text>
       </View>
     );
   };
@@ -89,7 +112,16 @@ const FAQ = ({ navigation }) => {
     >
       {renderHeader()}
       <View style={styles.bigTitleCont}>
-        <Text style={styles.bigTitle}>Frequently Asked Questions</Text>
+        <Text
+          style={[
+            styles.bigTitle,
+            {
+              color: theme.textColor,
+            },
+          ]}
+        >
+          Frequently Asked Questions
+        </Text>
       </View>
       {renderFaqs()}
     </SafeAreaView>
