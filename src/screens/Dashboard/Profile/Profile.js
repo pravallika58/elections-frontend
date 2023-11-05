@@ -46,10 +46,10 @@ const Profile = ({ navigation }) => {
           flex: 1,
         }}
       >
-        <View style={styles.starting}>
+        {/* <View style={styles.starting}>
           <Text style={styles.textStyle}>Profile</Text>
           <Text style={styles.textStyle}>Name of cause</Text>
-        </View>
+        </View> */}
         <View>
           <Image source={imagePath.icUser} style={styles.userProfile} />
         </View>
@@ -59,18 +59,27 @@ const Profile = ({ navigation }) => {
           onChangeText={(text) => setFirstName(text)}
           placeholder="First Name"
           label="First Name"
+          customContainerStyle={{
+            marginTop:verticalScale(10)
+          }}
         />
         <Input
           value={lastName}
           onChangeText={(text) => setLastName(text)}
           placeholder="Last Name"
           label="Last Name"
+          customContainerStyle={{
+            marginTop:verticalScale(10)
+          }}
         />
         <Input
           value={name}
           onChangeText={(text) => setName(text)}
           placeholder="Name"
           label="Title"
+          customContainerStyle={{
+            marginTop:verticalScale(10)
+          }}
         />
         <Input
           keyboardType={"email-address"}
@@ -78,6 +87,9 @@ const Profile = ({ navigation }) => {
           onChangeText={(text) => setEmail(text)}
           placeholder="eg:abc@gmail.com"
           label="Email"
+          customContainerStyle={{
+            marginTop:verticalScale(10)
+          }}
         />
       </KeyboardAwareScrollView>
       <CustomButton

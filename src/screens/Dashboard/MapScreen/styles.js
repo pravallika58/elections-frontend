@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     top: verticalScale(20),
   },
   footer: {
-    height: moderateScale(110),
+    height: moderateScale(95),
     backgroundColor: colors.white,
   },
   tabContainer: {
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
   tab: {
     width: moderateScale(59),
     height: moderateScale(53),
-    justifyContent: "center",
+    // justifyContent: "center",
     alignItems: "center",
     borderRadius: moderateScale(8),
     backgroundColor: colors.white,
