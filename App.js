@@ -1,9 +1,11 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, useColorScheme } from "react-native";
 import { useFonts } from "expo-font";
 import Routes from "./src/navigation/Route";
+import { darkTheme, lightTheme } from "./src/constants/colors";
 
 const App = () => {
+  const colorScheme = useColorScheme();
   const [fontsLoaded] = useFonts({
     "C-Bold": require("./src/assets/fonts/Comfortaa-Bold.ttf"),
     "C-Light": require("./src/assets/fonts/Comfortaa-Light.ttf"),
@@ -18,7 +20,7 @@ const App = () => {
   return (
     <View style={styles.container}>
       <Routes />
-      <StatusBar style="dark" />
+      <StatusBar style={colorScheme === "light" ? "dark" : "light"} />
     </View>
   );
 };

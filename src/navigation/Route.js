@@ -11,7 +11,7 @@ const Routes = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        {true ? (
+        {false ? (
           <Stack.Screen name={navigationStrings.AUTH} component={AuthStack} />
         ) : (
           <Stack.Screen name={navigationStrings.MAIN} component={MainStack} />

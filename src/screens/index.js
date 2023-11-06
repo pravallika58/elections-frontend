@@ -25,3 +25,5 @@ export { default as Congrats } from "./Dashboard/Congrats/Congrats";
 export { default as AllEvents } from "./Dashboard/AllEvents/AllEvents";
 export { default as EventDetails } from "./Dashboard/EventDetails/EventDetails";
 export { default as MapRoute } from "./Dashboard/MapRoute/MapRoute";
+export { default as Search } from "./Dashboard/News/Search";
+export { default as NewsViewer } from "./Dashboard/News/NewsViewer";

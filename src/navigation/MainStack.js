@@ -41,6 +41,11 @@ const MainStack = () => {
         name={navigationStrings.MAP_ROUTE}
         component={Screens.MapRoute}
       />
+      <Main.Screen
+        name={navigationStrings.NEWS_VIEWER}
+        component={Screens.NewsViewer}
+      />
+      <Main.Screen name={navigationStrings.SEARCH} component={Screens.Search} />
     </Main.Navigator>
   );
 };

@@ -4,6 +4,8 @@ import CustomButton from "./CustomButton";
 import SettingComponents from "./SettingComponents";
 import WordIcon from "./WordIcon";
 import IconTextIcon from "./IconTextIcon";
+import Card from "./Card";
+import SearchHeader from "./SearchHeader";
 
 export default {
   Header,
@@ -12,4 +14,6 @@ export default {
   SettingComponents,
   WordIcon,
   IconTextIcon,
+  Card,
+  SearchHeader,
 };

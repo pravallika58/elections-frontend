@@ -30,4 +30,6 @@ export default {
   ALL_EVENTS: "AllEvents",
   EVENT_DETAILS: "EventDetails",
   MAP_ROUTE: "MapRoute",
+  SEARCH: "Search",
+  NEWS_VIEWER: "NewsViewer",
 };
