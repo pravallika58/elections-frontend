@@ -1,3 +1,6 @@
+// Splash Screen
+export { default as Splash } from "./SplashScreen/SplashScreen";
+
 // Auth Screens
 
 export { default as Login } from "./Auth/Login/Login";

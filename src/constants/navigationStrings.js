@@ -32,4 +32,5 @@ export default {
   MAP_ROUTE: "MapRoute",
   SEARCH: "Search",
   NEWS_VIEWER: "NewsViewer",
+  SPLASH: "Splash",
 };

@@ -12,6 +12,7 @@ const AuthStack = () => {
         headerShown: false,
       }}
     >
+      <Auth.Screen name={navigationStrings.SPLASH} component={Screens.Splash} />
       <Auth.Screen name={navigationStrings.LOGIN} component={Screens.Login} />
       <Auth.Screen
         name={navigationStrings.REGISTER}
