@@ -76,7 +76,11 @@ const Login = ({ navigation }) => {
         </TouchableOpacity>
         <CustomButton
           label="Login"
-          onPress={() => navigation.navigate(navigationStrings.MAP_SCREEN)}
+          onPress={() =>
+            navigation.navigate(navigationStrings.MAIN, {
+              screen: navigationStrings.MAP_SCREEN,
+            })
+          }
         />
         {/* Don't have an account? Sign Up */}
         <Text
