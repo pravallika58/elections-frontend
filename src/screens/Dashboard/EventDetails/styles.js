@@ -47,6 +47,7 @@ const styles = StyleSheet.create({
     fontSize: textScale(20),
     fontWeight: "300",
     color: colors.black,
+    fontFamily: "C-Regular",
   },
   plusCont: {
     height: moderateScale(30),
@@ -73,6 +74,7 @@ const styles = StyleSheet.create({
     fontWeight: "300",
     fontSize: textScale(15),
     color: colors.black,
+    fontFamily: "C-Regular",
   },
   bottomContainer: {
     backgroundColor: colors.white,
@@ -94,6 +96,7 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     fontSize: textScale(18),
+    fontFamily: "C-Regular",
     color: colors.black,
     marginLeft: scale(10),
   },

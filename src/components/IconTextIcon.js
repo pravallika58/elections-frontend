@@ -15,6 +15,7 @@ import {
 } from "../constants/responsiveSizes";
 import imagePath from "../constants/imagePath";
 import { darkTheme, lightTheme } from "../constants/colors";
+import { AntDesign } from "@expo/vector-icons";
 
 const IconTextIcon = ({
   label,
@@ -23,12 +24,23 @@ const IconTextIcon = ({
   subHeading,
   subLabel,
   showTick,
+  onPressHeart,
+  showHeart,
+  isLiked,
 }) => {
   const colorScheme = useColorScheme();
   const theme = colorScheme === "light" ? lightTheme : darkTheme;
   return (
     <TouchableOpacity style={[styles.container, customContainerStyle]}>
-      <Image source={imagePath.icShare} style={styles.shareStyle} />
+      <Image
+        source={imagePath.icShare}
+        style={[
+          styles.shareStyle,
+          {
+            tintColor: theme.textColor,
+          },
+        ]}
+      />
       <View style={{ flex: 1 }}>
         <Text
           style={[
@@ -74,10 +86,19 @@ const IconTextIcon = ({
           style={[
             styles.shareStyle,
             {
-              tintColor: theme.buttonBackground,
+              tintColor: theme.textColor,
             },
           ]}
         />
+      )}
+      {showHeart && (
+        <TouchableOpacity onPress={onPressHeart}>
+          {isLiked ? (
+            <AntDesign name="heart" size={24} color="red" />
+          ) : (
+            <AntDesign name="hearto" size={24} color={theme.textColor} />
+          )}
+        </TouchableOpacity>
       )}
     </TouchableOpacity>
   );
@@ -85,7 +106,7 @@ const IconTextIcon = ({
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: scale(49),
+    paddingHorizontal: scale(24),
     marginTop: verticalScale(20),
     paddingBottom: verticalScale(20),
     borderBottomWidth: 0.2,

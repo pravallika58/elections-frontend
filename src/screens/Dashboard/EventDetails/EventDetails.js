@@ -7,6 +7,7 @@ import {
   ScrollView,
   SafeAreaView,
   useColorScheme,
+  Alert,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import styles from "./styles";
@@ -21,19 +22,156 @@ import {
   textScale,
   verticalScale,
 } from "../../../constants/responsiveSizes";
-import colors, { darkTheme, lightTheme } from "../../../constants/colors";
+import { darkTheme, lightTheme } from "../../../constants/colors";
 import Header from "../../../components/Header";
+import { showError, showSucess } from "../../../utils/helperFunctions";
+import {
+  deleteEvent,
+  getSingleEvent,
+  makeEventDislike,
+  makeEventLike,
+  saveCandidateName,
+} from "../../../redux/actions/event";
+import { useFocusEffect } from "@react-navigation/native";
+import * as Sharing from "expo-sharing";
+import * as FileSystem from "expo-file-system";
 
 const EventDetails = ({ route, navigation }) => {
   const colorScheme = useColorScheme();
   const theme = colorScheme === "light" ? lightTheme : darkTheme;
   const [modalWithOptions, setModalWithOptions] = useState(false);
-  const [isLiked, setIsLiked] = useState(false);
-  const { item } = route.params;
+  const [loading, setLoading] = useState(false);
+  const [event, setEvent] = useState([]);
+  const { eventId, key } = route.params;
 
   const scrollX = new Animated.Value(0);
   const { width } = Dimensions.get("window");
   let position = Animated.divide(scrollX, width);
+
+  useEffect(() => {
+    singleEvent();
+  }, []);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      singleEvent();
+    }, [])
+  );
+
+  const singleEvent = async () => {
+    setLoading(true);
+    try {
+      const res = await getSingleEvent(eventId);
+      setEvent(res);
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+    }
+  };
+
+  const onPressDelete = async () => {
+    setModalWithOptions(false);
+    Alert.alert(
+      "Delete Event",
+      "Are you sure you want to delete this event?",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel",
+        },
+
+        {
+          text: "OK",
+          onPress: () => deleteEventApi(),
+        },
+      ],
+      { cancelable: false }
+    );
+  };
+
+  const deleteEventApi = async () => {
+    try {
+      const res = await deleteEvent(eventId);
+      showSucess("Event deleted successfully");
+      navigation.navigate(navigationStrings.MY_EVENTS);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const onPressLike = async () => {
+    try {
+      if (event.isLiked) {
+        const res = await makeEventDislike(eventId);
+        singleEvent();
+        showSucess(res.message);
+      } else {
+        const res = await makeEventLike(eventId);
+        singleEvent();
+        showSucess(res.message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const onPressLocation = () => {
+    setModalWithOptions(false);
+    navigation.navigate(navigationStrings.MAP_ROUTE, {
+      latitude: event.latitude,
+      longitude: event.longitude,
+    });
+  };
+
+  const onShare = async () => {
+    const deepLink = `elections://${navigationStrings.EVENT_DETAILS}/${eventId}`;
+
+    try {
+      const fileUri = FileSystem.cacheDirectory + "event.txt";
+      await FileSystem.writeAsStringAsync(fileUri, deepLink);
+
+      const shareOptions = {
+        mimeType: "text/plain",
+        dialogTitle: "Share this event",
+        UTI: "public.plain-text",
+        encoding: "UTF-8",
+      };
+
+      await Sharing.shareAsync(fileUri, shareOptions);
+    } catch (error) {
+      console.error("Error sharing:", error);
+    }
+  };
+
+  function formateTime(time) {
+    const date = new Date(time);
+    let hours = date.getUTCHours();
+    const minutes = date.getUTCMinutes();
+
+    const amPM = hours >= 12 ? "PM" : "AM";
+
+    if (hours > 12) {
+      hours -= 12;
+    } else if (hours === 0) {
+      hours = 12;
+    }
+
+    const formattedHours = String(hours).padStart(2, "0");
+    const formattedMinutes = String(minutes).padStart(2, "0");
+
+    return `${formattedHours}:${formattedMinutes} ${amPM}`;
+  }
+
+  function formateDate(date) {
+    const date1 = new Date(date);
+    const year = date1.getFullYear();
+    const month = date1.getMonth() + 1;
+    const dt = date1.getDate();
+
+    return `${dt}:${month}:${year}`;
+  }
 
   function renderHeader() {
     return (
@@ -58,7 +196,7 @@ const EventDetails = ({ route, navigation }) => {
   }
 
   function renderImages() {
-    if (!item || !item.images) {
+    if (!event || !event.images) {
       return null;
     }
     return (
@@ -76,12 +214,12 @@ const EventDetails = ({ route, navigation }) => {
             )}
             scrollEventThrottle={16}
           >
-            {item.images.map((source, i) => {
+            {event.images.map((source, i) => {
               return (
                 <Image
                   key={i}
                   style={{ width, height: width }}
-                  source={source}
+                  source={{ uri: source.url }}
                   transition={1000}
                   placeholder={imagePath.icDefault}
                   placeholderContentFit="cover"
@@ -90,7 +228,7 @@ const EventDetails = ({ route, navigation }) => {
             })}
           </ScrollView>
           <View style={styles.pagination}>
-            {item.images.map((_, i) => {
+            {event.images.map((_, i) => {
               let opacity = position.interpolate({
                 inputRange: [i - 1, i, i + 1],
                 outputRange: [0.3, 1, 0.3],
@@ -119,6 +257,7 @@ const EventDetails = ({ route, navigation }) => {
   function renderDetails() {
     return (
       <ScrollView
+        showsVerticalScrollIndicator={false}
         style={{
           flex: 1,
           backgroundColor: theme.background,
@@ -140,7 +279,7 @@ const EventDetails = ({ route, navigation }) => {
                 },
               ]}
             >
-              {item.name}
+              {event.eventname}
             </Text>
             <Text
               numberOfLines={1}
@@ -154,7 +293,7 @@ const EventDetails = ({ route, navigation }) => {
                 },
               ]}
             >
-              {item.artist_name ? item.artist_name : "No Artist"}
+              {event.eventcreator}
             </Text>
           </View>
 
@@ -185,30 +324,71 @@ const EventDetails = ({ route, navigation }) => {
               styles.addressText,
               {
                 color: theme.textColor,
+                padding: 3,
               },
             ]}
           >
-            Address: {item.event_address} {item.event_city} {item.event_state}
+            Address: {event.location} {event.city} {event.state}
+          </Text>
+          {event.permanent === true ? (
+            <Text
+              style={[
+                styles.addressText,
+                {
+                  color: theme.textColor,
+                  padding: 3,
+                },
+              ]}
+            >
+              Permanent: Yes
+            </Text>
+          ) : (
+            <>
+              <Text
+                style={[
+                  styles.addressText,
+                  {
+                    color: theme.textColor,
+                    padding: 3,
+                  },
+                ]}
+              >
+                Start date: {formateDate(event.startdate)}
+              </Text>
+              <Text
+                style={[
+                  styles.addressText,
+                  {
+                    color: theme.textColor,
+                    padding: 3,
+                  },
+                ]}
+              >
+                End date: {formateDate(event.enddate)}
+              </Text>
+            </>
+          )}
+          <Text
+            style={[
+              styles.addressText,
+              {
+                color: theme.textColor,
+                padding: 3,
+              },
+            ]}
+          >
+            Start Time: {formateTime(event.starttime)}
           </Text>
           <Text
             style={[
               styles.addressText,
               {
                 color: theme.textColor,
+                padding: 3,
               },
             ]}
           >
-            Start date & Time: {item.start_date} {item.start_time}
-          </Text>
-          <Text
-            style={[
-              styles.addressText,
-              {
-                color: theme.textColor,
-              },
-            ]}
-          >
-            End date & Time: {item.end_date} {item.end_time}
+            End Time: {formateTime(event.endtime)}
           </Text>
         </View>
         <View style={[styles.addressCont, { borderBottomWidth: 0 }]}>
@@ -220,7 +400,7 @@ const EventDetails = ({ route, navigation }) => {
               },
             ]}
           >
-            {item.description}
+            {event.description}
           </Text>
         </View>
       </ScrollView>
@@ -249,10 +429,7 @@ const EventDetails = ({ route, navigation }) => {
             ]}
           >
             <TouchableOpacity
-              onPress={() => {
-                navigation.navigate(navigationStrings.MAP_ROUTE),
-                  setModalWithOptions(false);
-              }}
+              onPress={onPressLocation}
               activeOpacity={0.8}
               style={styles.container2}
             >
@@ -268,8 +445,12 @@ const EventDetails = ({ route, navigation }) => {
                 Location
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity activeOpacity={0.8} style={styles.container2}>
-              {isLiked ? (
+            <TouchableOpacity
+              onPress={onPressLike}
+              activeOpacity={0.8}
+              style={styles.container2}
+            >
+              {event.isLiked ? (
                 <AntDesign name="heart" size={24} color="red" />
               ) : (
                 <AntDesign name="hearto" size={24} color={theme.textColor} />
@@ -287,7 +468,7 @@ const EventDetails = ({ route, navigation }) => {
             </TouchableOpacity>
             <TouchableOpacity
               activeOpacity={0.8}
-              onPress={() => onShare(item.event_link)}
+              onPress={onShare}
               style={styles.container2}
             >
               <AntDesign name="sharealt" size={24} color={theme.textColor} />
@@ -302,32 +483,49 @@ const EventDetails = ({ route, navigation }) => {
                 Share
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity activeOpacity={0.8} style={styles.container2}>
-              <Entypo name="edit" size={24} color={theme.textColor} />
-              <Text
-                style={[
-                  styles.textStyle,
-                  {
-                    color: theme.textColor,
-                  },
-                ]}
-              >
-                Edit
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity activeOpacity={0.8} style={styles.container2}>
-              <AntDesign name="delete" size={24} color="red" />
-              <Text
-                style={[
-                  styles.textStyle,
-                  {
-                    color: theme.textColor,
-                  },
-                ]}
-              >
-                Delete
-              </Text>
-            </TouchableOpacity>
+            {key === "myEvents" ? (
+              <>
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate(navigationStrings.EVENTS, {
+                      item: event,
+                      key: "edit",
+                    })
+                  }
+                  activeOpacity={0.8}
+                  style={styles.container2}
+                >
+                  <Entypo name="edit" size={24} color={theme.textColor} />
+                  <Text
+                    style={[
+                      styles.textStyle,
+                      {
+                        color: theme.textColor,
+                      },
+                    ]}
+                  >
+                    Edit
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={onPressDelete}
+                  activeOpacity={0.8}
+                  style={styles.container2}
+                >
+                  <AntDesign name="delete" size={24} color="red" />
+                  <Text
+                    style={[
+                      styles.textStyle,
+                      {
+                        color: theme.textColor,
+                      },
+                    ]}
+                  >
+                    Delete
+                  </Text>
+                </TouchableOpacity>
+              </>
+            ) : null}
           </View>
         </Modal>
       </View>

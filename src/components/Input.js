@@ -25,22 +25,40 @@ const Input = ({
   label,
   customContainerStyle,
   onFocus,
+  isRequired,
+  onSubmitEditing,
 }) => {
   const colorScheme = useColorScheme();
   const theme = colorScheme === "light" ? lightTheme : darkTheme;
   return (
     <View style={[styles.container, customContainerStyle]}>
-      <Text
-        style={[
-          styles.labelStyle,
-          {
-            color: theme.textColor,
-          },
-        ]}
-      >
-        {label}
-      </Text>
+      <View style={{ flexDirection: "row" }}>
+        <Text
+          style={[
+            styles.labelStyle,
+            {
+              color: theme.textColor,
+            },
+          ]}
+        >
+          {label}
+        </Text>
+        {isRequired && (
+          <Text
+            style={{
+              color: "red",
+              fontSize: 16,
+              fontWeight: "bold",
+              paddingLeft: 4,
+            }}
+          >
+            *
+          </Text>
+        )}
+      </View>
       <TextInput
+        autoCapitalize={"none"}
+        onSubmitEditing={onSubmitEditing}
         multiline={multiline}
         placeholder={placeholder}
         keyboardType={keyboardType}

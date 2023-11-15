@@ -13,13 +13,62 @@ import Input from "../../../components/Input";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import CustomButton from "../../../components/CustomButton";
 import navigationStrings from "../../../constants/navigationStrings";
+import validator from "../../../utils/validation";
+import { showError, storeData } from "../../../utils/helperFunctions";
+import { userLogin } from "../../../redux/actions/auth";
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const colorScheme = useColorScheme();
 
   const theme = colorScheme === "light" ? lightTheme : darkTheme;
+
+  const isValidData = () => {
+    const error = validator({
+      email,
+      password,
+    });
+    if (error) {
+      showError(error);
+      return false;
+    }
+    return true;
+  };
+
+  const onPressLogin = async () => {
+    const checkValid = isValidData();
+    if (checkValid) {
+      setLoading(true);
+      try {
+        const res = await userLogin({
+          email,
+          password,
+        });
+
+        setEmail("");
+        setPassword("");
+        await storeData("token", res?.data?.refreshToken);
+        await storeData("userId", JSON.stringify(res?.data?._id));
+        navigation.replace(navigationStrings.MAIN, {
+          screen: navigationStrings.MAP_SCREEN,
+        });
+        setLoading(false);
+      } catch (error) {
+        showError(error?.message);
+        setEmail("");
+        setPassword("");
+        setLoading(false);
+      }
+    }
+  };
+
+  const onPressGuestLogin = async () => {
+    navigation.replace(navigationStrings.MAIN, {
+      screen: navigationStrings.MAP_SCREEN,
+    });
+  };
 
   return (
     <SafeAreaView
@@ -75,12 +124,16 @@ const Login = ({ navigation }) => {
           </Text>
         </TouchableOpacity>
         <CustomButton
+          isLoading={loading}
           label="Login"
-          onPress={() =>
-            navigation.navigate(navigationStrings.MAIN, {
-              screen: navigationStrings.MAP_SCREEN,
-            })
-          }
+          onPress={onPressLogin}
+        />
+        <CustomButton
+          label="Login as Guest"
+          onPress={onPressGuestLogin}
+          customStyles={{
+            backgroundColor: colors.buttonBackground,
+          }}
         />
         {/* Don't have an account? Sign Up */}
         <Text

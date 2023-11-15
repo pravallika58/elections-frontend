@@ -4,6 +4,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   useColorScheme,
+  ActivityIndicator,
 } from "react-native";
 import React from "react";
 import {
@@ -14,31 +15,44 @@ import {
 } from "../constants/responsiveSizes";
 import colors, { darkTheme, lightTheme } from "../constants/colors";
 
-const CustomButton = ({ customStyles, label, onPress }) => {
+const CustomButton = ({
+  customStyles,
+  label,
+  onPress,
+  isLoading,
+  disabled,
+  labelStyle,
+}) => {
   const colorScheme = useColorScheme();
   const theme = colorScheme === "light" ? lightTheme : darkTheme;
   return (
     <TouchableOpacity
+      disabled={disabled}
       activeOpacity={0.8}
       onPress={onPress}
       style={[
         styles.buttonContainer,
-        customStyles,
         {
           backgroundColor: theme.buttonBackground,
         },
+        customStyles,
       ]}
     >
-      <Text
-        style={[
-          styles.labelStyle,
-          {
-            color: colors.white,
-          },
-        ]}
-      >
-        {label}
-      </Text>
+      {isLoading ? (
+        <ActivityIndicator size={"small"} color={colors.white} />
+      ) : (
+        <Text
+          style={[
+            styles.labelStyle,
+            {
+              color: colors.white,
+            },
+            labelStyle,
+          ]}
+        >
+          {label}
+        </Text>
+      )}
     </TouchableOpacity>
   );
 };

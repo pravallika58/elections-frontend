@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     paddingBottom: verticalScale(20),
   },
   favoriteStyle: {
-    paddingHorizontal: scale(49),
+    paddingHorizontal: scale(24),
     fontSize: textScale(20),
     fontWeight: "700",
     fontFamily: "C-Regular",
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     paddingTop: verticalScale(20),
   },
   favoriteLocation: {
-    paddingHorizontal: scale(49),
+    paddingHorizontal: scale(24),
     paddingTop: verticalScale(20),
     paddingBottom: verticalScale(20),
     borderBottomWidth: 0.2,
@@ -61,6 +61,12 @@ const styles = StyleSheet.create({
   tickStyle: {
     width: moderateScale(24),
     height: moderateScale(24),
+  },
+  labelStyle: {
+    fontSize: textScale(16),
+    fontWeight: "700",
+    fontFamily: "C-Regular",
+    color: "#000000",
   },
 });
 

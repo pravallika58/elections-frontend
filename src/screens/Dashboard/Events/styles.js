@@ -20,7 +20,6 @@ const styles = StyleSheet.create({
   },
   chooseType: {
     borderRadius: moderateScale(24),
-    marginTop: verticalScale(20),
     marginHorizontal: scale(16),
     padding: moderateScale(9),
     backgroundColor: colors.white,
@@ -63,7 +62,7 @@ const styles = StyleSheet.create({
   selectDateContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginTop: verticalScale(30),
+    marginTop: verticalScale(20),
     marginHorizontal: scale(10),
   },
   marginStyles: {
@@ -98,9 +97,8 @@ const styles = StyleSheet.create({
   },
   permanentCont: {
     flexDirection: "row",
-    justifyContent: "center",
-    marginHorizontal: scale(10),
-    marginTop: verticalScale(20),
+    justifyContent: "flex-start",
+    marginTop: verticalScale(10),
     alignItems: "center",
   },
   permanentTextStyle: {
@@ -129,7 +127,7 @@ const styles = StyleSheet.create({
     color: colors.black,
     fontWeight: "700",
     textAlign: "center",
-    paddingVertical: verticalScale(40),
+    paddingVertical: verticalScale(15),
   },
   featureText: {
     fontSize: textScale(20),
@@ -231,6 +229,59 @@ const styles = StyleSheet.create({
   },
   customStyles: {
     marginBottom: verticalScale(20),
+  },
+  notTokenContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  textStyle2: {
+    fontSize: textScale(16),
+    fontFamily: "C-Regular",
+
+    fontWeight: "700",
+    textAlign: "center",
+    lineHeight: 30,
+    marginTop: verticalScale(20),
+  },
+  buttonBackground: {
+    width: "35%",
+  },
+  crossIconStyle: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    position: "absolute",
+    right: scale(2),
+    zIndex: 1,
+  },
+  permanentTextStyle: {
+    fontSize: textScale(16),
+    fontFamily: "C-Regular",
+    color: colors.black,
+    fontWeight: "700",
+    paddingLeft: scale(10),
+    paddingTop: verticalScale(10),
+  },
+  checkboxContainer: {
+    left: scale(10),
+    top: verticalScale(5),
+  },
+  steric: {
+    color: "red",
+    fontSize: textScale(16),
+    fontWeight: "bold",
+    paddingLeft: 4,
+  },
+  mainHeadCont: {
+    flexDirection: "row",
+    marginHorizontal: scale(16),
+    marginTop: verticalScale(20),
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: verticalScale(20),
+    alignItems: "center",
   },
 });
 

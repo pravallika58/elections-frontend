@@ -13,6 +13,7 @@ const Drawer = createDrawerNavigator();
 const CustomDrawer = () => {
   const colorScheme = useColorScheme();
   const theme = colorScheme === "light" ? lightTheme : darkTheme;
+
   return (
     <Drawer.Navigator
       screenOptions={{
@@ -55,6 +56,10 @@ const CustomDrawer = () => {
       <Drawer.Screen
         name={navigationStrings.EVENTS}
         component={Screens.Events}
+        initialParams={{
+          item: [],
+          key: "",
+        }}
         options={{
           drawerIcon: ({ focused, size }) => {
             return (

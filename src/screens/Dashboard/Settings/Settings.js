@@ -1,5 +1,5 @@
-import { View, Text, useColorScheme } from "react-native";
-import React, { useState } from "react";
+import { useColorScheme } from "react-native";
+import React, { useCallback, useEffect, useState } from "react";
 import styles from "./styles";
 import { darkTheme, lightTheme } from "../../../constants/colors";
 import Header from "../../../components/Header";
@@ -12,6 +12,8 @@ import {
 } from "../../../constants/responsiveSizes";
 import SettingComponents from "../../../components/SettingComponents";
 import WordIcon from "../../../components/WordIcon";
+import { getData, storeData } from "../../../utils/helperFunctions";
+import { useFocusEffect } from "@react-navigation/native";
 
 const Settings = ({ navigation }) => {
   const [defaultKey, setDefaultKey] = useState(true);
@@ -22,17 +24,71 @@ const Settings = ({ navigation }) => {
   const [darkKey, setDarkKey] = useState(false);
   const [countriesKey, setCountriesKey] = useState(true);
   const [statesKey, setStatesKey] = useState(false);
+
+  const [title, setTitle] = useState("Current Location");
   const colorScheme = useColorScheme();
   const theme = colorScheme === "light" ? lightTheme : darkTheme;
+
+  useEffect(() => {
+    getData2();
+    getMapMode();
+  });
+
+  useFocusEffect(
+    useCallback(() => {
+      getData2();
+    }, [])
+  );
+
+  const getMapMode = async () => {
+    try {
+      const res = await getData("mapType");
+      const parsedRes = JSON.parse(res);
+
+      if (parsedRes && parsedRes.key === "standard") {
+        setDefaultKey(true);
+        setSatelliteKey(false);
+      } else {
+        setSatelliteKey(true);
+        setDefaultKey(false);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getData2 = async () => {
+    const res = await getData("selectedDefaultLocation");
+    if (res) {
+      const data = JSON.parse(res);
+      setTitle(data.label);
+    } else {
+      setTitle("Current Location");
+    }
+  };
+
+  const mapModeType = async (key) => {
+    try {
+      await storeData("mapType", key);
+    } catch (error) {
+      console.log("Error saving map type:", error);
+    }
+  };
 
   const onPressDefault = () => {
     setDefaultKey(true);
     setSatelliteKey(false);
+    mapModeType({
+      key: "standard",
+    });
   };
 
   const onPressSatellite = () => {
     setDefaultKey(false);
     setSatelliteKey(true);
+    mapModeType({
+      key: "satellite",
+    });
   };
 
   const onPressMiles = () => {
@@ -137,7 +193,7 @@ const Settings = ({ navigation }) => {
           onPress={() => navigation.navigate(navigationStrings.LOCATION_ACCESS)}
         />
         <WordIcon
-          title="Current Location"
+          title={title}
           label="Default Location"
           onPress={() =>
             navigation.navigate(navigationStrings.DEFAULT_LOCATION)

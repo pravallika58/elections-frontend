@@ -15,6 +15,7 @@ const Congrats = ({ navigation }) => {
     }, 2000);
     return () => clearTimeout(timeout);
   }, []);
+
   return (
     <View
       style={[

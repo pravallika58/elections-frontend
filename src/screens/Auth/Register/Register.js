@@ -13,6 +13,11 @@ import Input from "../../../components/Input";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import CustomButton from "../../../components/CustomButton";
 import navigationStrings from "../../../constants/navigationStrings";
+import validator from "../../../utils/validation";
+import { showError, showSucess } from "../../../utils/helperFunctions";
+import { userSignup } from "../../../redux/actions/auth";
+import { apiPost } from "../../../utils/utils";
+import { SIGNUP_API } from "../../../config/urls";
 
 const Register = ({ navigation }) => {
   const [firstName, setFirstName] = useState("");
@@ -20,9 +25,57 @@ const Register = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const colorScheme = useColorScheme();
   const theme = colorScheme === "light" ? lightTheme : darkTheme;
 
+  const isValidData = () => {
+    const error = validator({
+      firstName,
+      lastName,
+      email,
+      password,
+      confirmPassword,
+    });
+    if (error) {
+      showError(error);
+      return false;
+    }
+    return true;
+  };
+
+  const onPressRegister = async () => {
+    const checkValidData = isValidData();
+    if (checkValidData) {
+      setLoading(true);
+      let data = {
+        firstname: firstName,
+        lastname: lastName,
+        email: email,
+        password: password,
+        confirmpassword: confirmPassword,
+      };
+      try {
+        let res = await userSignup(data);
+        setFirstName("");
+        setLastName("");
+        setEmail("");
+        setPassword("");
+        setConfirmPassword("");
+        setLoading(false);
+        showSucess("User Registered Successfully");
+        navigation.navigate(navigationStrings.LOGIN);
+      } catch (error) {
+        showError(error?.error || error?.message);
+        setFirstName("");
+        setLastName("");
+        setEmail("");
+        setPassword("");
+        setConfirmPassword("");
+        setLoading(false);
+      }
+    }
+  };
   return (
     <SafeAreaView
       style={[
@@ -72,7 +125,11 @@ const Register = ({ navigation }) => {
           secureTextEntry={true}
         />
 
-        <CustomButton label="Register" />
+        <CustomButton
+          isLoading={loading}
+          onPress={onPressRegister}
+          label="Register"
+        />
         {/* Don't have an account? Sign Up */}
         <Text
           style={[

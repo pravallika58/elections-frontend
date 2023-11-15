@@ -11,6 +11,9 @@ import { Ionicons } from "@expo/vector-icons";
 import { AirbnbRating } from "react-native-ratings";
 import colors, { darkTheme, lightTheme } from "../../../constants/colors";
 import { scale, verticalScale } from "../../../constants/responsiveSizes";
+import { ratingAppbb } from "../../../redux/actions/rating";
+import { showSucess } from "../../../utils/helperFunctions";
+import navigationStrings from "../../../constants/navigationStrings";
 
 const RateApp = ({ navigation }) => {
   const colorScheme = useColorScheme();
@@ -22,6 +25,23 @@ const RateApp = ({ navigation }) => {
 
   const handleRatingChange = (newRating) => {
     setRating(newRating);
+  };
+
+  const submitRating = async () => {
+    try {
+      setLoading(true);
+      const data = {
+        totalRatings: rating,
+      };
+      const res = await ratingAppbb(data);
+      showSucess(res.message);
+      setRating(0);
+      navigation.navigate(navigationStrings.MAP_SCREEN);
+    } catch (error) {
+      console.error("Error submitting rating:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   // Renders
@@ -124,6 +144,7 @@ const RateApp = ({ navigation }) => {
                 rating === 0 ? "#87CEEB" : theme.buttonBackground,
             },
           ]}
+          onPress={submitRating}
         >
           {loading ? (
             <ActivityIndicator color="white" size={"small"} />

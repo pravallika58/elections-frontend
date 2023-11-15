@@ -4,6 +4,7 @@
     "slug": "Elections",
     "version": "1.0.0",
     "orientation": "portrait",
+    "scheme": "elections",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
     "splash": {

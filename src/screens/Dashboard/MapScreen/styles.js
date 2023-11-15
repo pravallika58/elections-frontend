@@ -1,6 +1,7 @@
 import { StyleSheet } from "react-native";
 import colors from "../../../constants/colors";
 import {
+  height,
   moderateScale,
   scale,
   textScale,
@@ -108,7 +109,7 @@ const styles = StyleSheet.create({
   },
   showEventsCont: {
     position: "absolute",
-    bottom: verticalScale(120),
+    bottom: verticalScale(170),
     paddingHorizontal: scale(16),
     backgroundColor: colors.grey,
     height: moderateScale(49),
@@ -188,6 +189,73 @@ const styles = StyleSheet.create({
     fontSize: textScale(12),
     fontWeight: "400",
     fontFamily: "C-Regular",
+  },
+  nocandidate: {
+    fontSize: textScale(12),
+    fontFamily: "C-Regular",
+    fontWeight: "700",
+    paddingTop: verticalScale(10),
+  },
+  flatlistCont: {
+    flex: 1,
+    marginTop: verticalScale(20),
+    marginBottom: verticalScale(20),
+  },
+  activityIndicator: {
+    height: height / 4,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  noEventText: {
+    fontSize: textScale(18),
+    color: colors.black,
+    fontFamily: "C-Regular",
+  },
+  noEventCont: {
+    justifyContent: "center",
+    alignItems: "center",
+    height: height / 4,
+  },
+  card: {
+    flexDirection: "row",
+    marginVertical: moderateScale(10),
+    backgroundColor: colors.white,
+  },
+  image: {
+    width: moderateScale(141),
+    height: moderateScale(127),
+    borderRadius: moderateScale(10),
+  },
+  cardTitle: {
+    fontSize: textScale(15),
+    fontWeight: "200",
+    color: colors.black,
+    paddingLeft: scale(11),
+  },
+  cardSubTitle: {
+    fontSize: textScale(15),
+    fontWeight: "300",
+    color: colors.black,
+    paddingLeft: scale(11),
+    paddingTop: verticalScale(12),
+  },
+  cardText: {
+    flex: 1,
+    flexDirection: "column",
+    paddingLeft: scale(10),
+  },
+  modalView: {
+    backgroundColor: colors.white,
+    borderRadius: moderateScale(20),
+    paddingVertical: verticalScale(20),
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
   },
 });
 

@@ -1,8 +1,11 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, useColorScheme } from "react-native";
+import { StyleSheet, View, useColorScheme } from "react-native";
 import { useFonts } from "expo-font";
 import Routes from "./src/navigation/Route";
-import { darkTheme, lightTheme } from "./src/constants/colors";
+import FlashMessage from "react-native-flash-message";
+import { textScale } from "./src/constants/responsiveSizes";
+import { Provider } from "react-redux";
+import store from "./src/redux/store";
 
 const App = () => {
   const colorScheme = useColorScheme();
@@ -18,10 +21,19 @@ const App = () => {
     return null;
   }
   return (
-    <View style={styles.container}>
-      <Routes />
-      <StatusBar style={colorScheme === "light" ? "dark" : "light"} />
-    </View>
+    <Provider store={store}>
+      <View style={styles.container}>
+        <Routes />
+        <StatusBar style={colorScheme === "light" ? "dark" : "light"} />
+        <FlashMessage
+          position={"top"}
+          titleStyle={{
+            fontFamily: "C-Medium",
+            fontSize: textScale(14),
+          }}
+        />
+      </View>
+    </Provider>
   );
 };
 

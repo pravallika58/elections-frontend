@@ -5,9 +5,9 @@ import {
   Image,
   useColorScheme,
 } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./styles";
-import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
+import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import Header from "../../../components/Header";
 import {
   scale,
@@ -20,10 +20,39 @@ import {
   lightTheme,
   mapCustomStyle,
 } from "../../../constants/colors";
+import {
+  requestForegroundPermissionsAsync,
+  getCurrentPositionAsync,
+} from "expo-location";
+import MapViewDirections from "react-native-maps-directions";
+import { GOOGLE_API_KEY } from "../../../constants/constants";
+import { showError } from "../../../utils/helperFunctions";
 
-const MapRoute = ({ navigation }) => {
+const MapRoute = ({ navigation, route }) => {
+  const [region, setRegion] = useState(null);
+  const { latitude, longitude } = route.params;
+  const [routeDuration, setRouteDuration] = useState(null);
+  console.log("latitude", latitude);
   const colorScheme = useColorScheme();
   const theme = colorScheme === "light" ? lightTheme : darkTheme;
+  const mapRef = React.useRef(null);
+
+  useEffect(() => {
+    (async () => {
+      const { status } = await requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        return;
+      }
+      const location = await getCurrentPositionAsync({});
+      const newRegion = {
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+        latitudeDelta: 0.01,
+        longitudeDelta: 0.01,
+      };
+      setRegion(newRegion);
+    })();
+  }, []);
   function renderHeader() {
     return (
       <Header
@@ -50,16 +79,52 @@ const MapRoute = ({ navigation }) => {
     >
       {renderHeader()}
       <MapView
+        ref={mapRef}
         style={styles.MapStyle}
-        initialRegion={{
-          latitude: 37.78825,
-          longitude: -122.4324,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
-        }}
+        initialRegion={region}
+        showsUserLocation={true}
         customMapStyle={colorScheme === "light" ? [] : mapCustomStyle}
         provider={PROVIDER_GOOGLE}
-      ></MapView>
+      >
+        {region && (
+          <MapViewDirections
+            origin={{
+              latitude: region.latitude,
+              longitude: region.longitude,
+            }}
+            destination={{
+              latitude: parseFloat(latitude),
+              longitude: parseFloat(longitude),
+            }}
+            apikey={GOOGLE_API_KEY}
+            strokeWidth={10}
+            strokeColor="#24b0ff"
+            optimizeWaypoints={true}
+            onReady={(result) => {
+              setRouteDuration(result.duration);
+              if (mapRef.current) {
+                mapRef.current.fitToCoordinates(result.coordinates, {
+                  edgePadding: { top: 50, right: 50, bottom: 50, left: 50 },
+                  animated: true,
+                });
+              }
+            }}
+            onError={(errorMessage) => {
+              showError(errorMessage);
+            }}
+          />
+        )}
+        <Marker
+          coordinate={{
+            latitude: parseFloat(latitude),
+            longitude: parseFloat(longitude),
+          }}
+          title={"Destination"}
+          description={`Duration: ${routeDuration} min`}
+          style={{ width: 40, height: 40 }}
+        />
+      </MapView>
+
       <View
         style={[
           styles.mapPinContainer,

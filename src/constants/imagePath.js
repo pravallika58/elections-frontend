@@ -38,4 +38,5 @@ export default {
   icPlus: require("../assets/Images/plus.png"),
   icPin: require("../assets/Images/pin.png"),
   icSplash: require("../assets/Images/Elections.png"),
+  icDefault: require("../assets/Images/default.png"),
 };
