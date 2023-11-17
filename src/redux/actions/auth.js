@@ -3,8 +3,9 @@ import {
   GET_ME,
   LOGIN_API,
   SIGNUP_API,
+  UPDATE_USER,
 } from "../../config/urls";
-import { apiGet, apiPost } from "../../utils/utils";
+import { apiGet, apiPost, apiPut } from "../../utils/utils";
 import { saveUserData } from "../reducers/auth";
 import store from "../store";
 const { dispatch } = store;
@@ -32,4 +33,12 @@ export const forgotPassword = (data) => {
 
 export const getMyDetails = () => {
   return apiGet(GET_ME);
+};
+
+export const updateUser = (data) => {
+  console.log(data);
+  const headers = {
+    "Content-Type": "multipart/form-data",
+  };
+  return apiPut(UPDATE_USER, data, headers);
 };

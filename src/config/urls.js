@@ -17,3 +17,4 @@ export const SAVE_LOCATION_DATA = getApiURL("/favorite-location");
 export const GET_LOCATIONS = getApiURL("/all-location");
 export const REMOVE_LOCATION = getApiURL("/favorite-location/:id");
 export const RATE_US = getApiURL("/rate");
+export const UPDATE_USER = getApiURL("/update-profile");

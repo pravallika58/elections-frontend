@@ -11,7 +11,9 @@ const Congrats = ({ navigation }) => {
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      navigation.navigate(navigationStrings.MAP_SCREEN);
+      navigation.navigate(navigationStrings.MAIN, {
+        screen: navigationStrings.MAP_SCREEN,
+      });
     }, 2000);
     return () => clearTimeout(timeout);
   }, []);
@@ -25,8 +27,23 @@ const Congrats = ({ navigation }) => {
         },
       ]}
     >
-      <Image source={imagePath.icChampagne} style={styles.cheers} />
-      <Text style={styles.textStyle}>
+      <Image
+        source={imagePath.icChampagne}
+        style={[
+          styles.cheers,
+          {
+            tintColor: theme.textColor,
+          },
+        ]}
+      />
+      <Text
+        style={[
+          styles.textStyle,
+          {
+            color: theme.textColor,
+          },
+        ]}
+      >
         You have successfully submitted the event
       </Text>
     </View>

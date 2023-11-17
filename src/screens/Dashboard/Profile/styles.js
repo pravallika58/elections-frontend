@@ -15,6 +15,11 @@ const styles = StyleSheet.create({
     width: moderateScale(210),
     height: moderateScale(210),
     borderRadius: moderateScale(105),
+  },
+  picContainer: {
+    width: moderateScale(210),
+    height: moderateScale(210),
+    borderRadius: moderateScale(105),
     marginTop: moderateScale(20),
     alignSelf: "center",
   },
@@ -40,6 +45,36 @@ const styles = StyleSheet.create({
     marginHorizontal: 0,
     paddingHorizontal: scale(16),
     borderColor: "grey",
+  },
+  cameraContainer: {
+    position: "absolute",
+    bottom: verticalScale(-10),
+    right: scale(30),
+  },
+  uploadPic: {
+    marginTop: verticalScale(10),
+    justifyContent: "center",
+    alignItems: "center",
+    alignSelf: "center",
+    marginBottom: verticalScale(20),
+  },
+  uploadPictureText: {
+    fontSize: textScale(16),
+    fontFamily: "C-Regular",
+    fontWeight: "bold",
+  },
+  modalView: {
+    backgroundColor: colors.white,
+    borderRadius: moderateScale(20),
+    paddingVertical: verticalScale(20),
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
   },
 });
 

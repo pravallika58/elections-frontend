@@ -30,13 +30,19 @@ const AllEvents = ({ navigation, route }) => {
   const [mainFilteredEventsByLocation, setMainFilteredEventsByLocation] =
     useState([]);
   const [loading, setLoading] = useState(true);
+  const [totalEvents, setTotalEvents] = useState(false);
   const [title, setTitle] = useState("");
   const colorScheme = useColorScheme();
   const theme = colorScheme === "light" ? lightTheme : darkTheme;
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    if (totalEvents) {
+      console.log("Called");
+      allEvents();
+    } else {
+      fetchData();
+    }
+  }, [totalEvents]);
 
   useFocusEffect(
     useCallback(() => {
@@ -158,6 +164,18 @@ const AllEvents = ({ navigation, route }) => {
               : "All Events"}
           </Text>
         </View>
+        <TouchableOpacity onPress={() => setTotalEvents(!totalEvents)}>
+          <Text
+            style={[
+              styles.heading,
+              {
+                color: theme.textColor,
+              },
+            ]}
+          >
+            All
+          </Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -169,6 +187,7 @@ const AllEvents = ({ navigation, route }) => {
           navigation.navigate(navigationStrings.EVENT_DETAILS, {
             eventId: item._id,
             key: "allEvents",
+            title: title,
           })
         }
         activeOpacity={0.8}
@@ -268,7 +287,7 @@ const AllEvents = ({ navigation, route }) => {
         ) : (
           <FlatList
             showsVerticalScrollIndicator={false}
-            data={mainFilteredEventsByLocation}
+            data={totalEvents ? events : mainFilteredEventsByLocation}
             keyExtractor={(item) => item._id}
             renderItem={renderItem}
             refreshing={loading}

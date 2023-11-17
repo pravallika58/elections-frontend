@@ -51,6 +51,7 @@ const Login = ({ navigation }) => {
         setPassword("");
         await storeData("token", res?.data?.refreshToken);
         await storeData("userId", JSON.stringify(res?.data?._id));
+        await storeData("userData", JSON.stringify(res.data));
         navigation.replace(navigationStrings.MAIN, {
           screen: navigationStrings.MAP_SCREEN,
         });

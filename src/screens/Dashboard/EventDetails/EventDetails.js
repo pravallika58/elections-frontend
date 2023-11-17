@@ -42,7 +42,7 @@ const EventDetails = ({ route, navigation }) => {
   const [modalWithOptions, setModalWithOptions] = useState(false);
   const [loading, setLoading] = useState(false);
   const [event, setEvent] = useState([]);
-  const { eventId, key } = route.params;
+  const { eventId, key, title } = route.params;
 
   const scrollX = new Animated.Value(0);
   const { width } = Dimensions.get("window");
@@ -183,7 +183,7 @@ const EventDetails = ({ route, navigation }) => {
           fontSize: textScale(24),
         }}
         location={true}
-        locationText="Bowling Green, OH"
+        locationText={title}
         customHeaderContainer={{
           borderBottomWidth: 0.5,
           paddingBottom: verticalScale(20),

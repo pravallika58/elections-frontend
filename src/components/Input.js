@@ -27,6 +27,7 @@ const Input = ({
   onFocus,
   isRequired,
   onSubmitEditing,
+  editable,
 }) => {
   const colorScheme = useColorScheme();
   const theme = colorScheme === "light" ? lightTheme : darkTheme;
@@ -57,6 +58,7 @@ const Input = ({
         )}
       </View>
       <TextInput
+        editable={editable}
         autoCapitalize={"none"}
         onSubmitEditing={onSubmitEditing}
         multiline={multiline}

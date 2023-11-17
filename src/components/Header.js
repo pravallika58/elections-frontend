@@ -15,6 +15,7 @@ import {
 } from "../constants/responsiveSizes";
 import imagePath from "../constants/imagePath";
 import colors, { darkTheme, lightTheme } from "../constants/colors";
+import { Feather } from "@expo/vector-icons";
 
 const Header = ({
   label,
@@ -24,6 +25,8 @@ const Header = ({
   customHeaderContainer,
   location,
   locationText,
+  showRightIcon,
+  onPressEdit,
 }) => {
   const colorScheme = useColorScheme();
   const theme = colorScheme === "light" ? lightTheme : darkTheme;
@@ -71,6 +74,12 @@ const Header = ({
           </Text>
         ) : null}
       </View>
+
+      {showRightIcon ? (
+        <TouchableOpacity activeOpacity={0.8} onPress={onPressEdit}>
+          <Feather name="edit" size={30} color={theme.textColor} />
+        </TouchableOpacity>
+      ) : null}
     </View>
   );
 };
