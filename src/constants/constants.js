@@ -94,8 +94,79 @@ const Category = [
     category: "technology",
   },
 ];
+
+const team = [
+  {
+    id: 11,
+    name: "Jerry W.",
+    role: "Designer",
+    image: imagePath.icMan5,
+  },
+  {
+    id: 1,
+    name: "Pravallika",
+    role: "Developer",
+    image: imagePath.icLady1,
+  },
+  {
+    id: 2,
+    name: "Anuhya",
+    role: "Developer",
+    image: imagePath.icLady2,
+  },
+  {
+    id: 3,
+    name: "Binish",
+    role: "Developer",
+    image: imagePath.icLady3,
+  },
+  {
+    id: 4,
+    name: "Aakanksha",
+    role: "Developer",
+    image: imagePath.icLady4,
+  },
+  {
+    id: 5,
+    name: "Tram",
+    role: "Developer",
+    image: imagePath.icMan1,
+  },
+  {
+    id: 6,
+    name: "Zachary",
+    role: "Developer",
+    image: imagePath.icMan5,
+  },
+  {
+    id: 7,
+    name: "Alex",
+    role: "Developer",
+    image: imagePath.icMan3,
+  },
+  {
+    id: 8,
+    name: "Mitch",
+    role: "Developer",
+    image: imagePath.icMan4,
+  },
+  {
+    id: 9,
+    name: "Brandon",
+    role: "Developer",
+    image: imagePath.icMan7,
+  },
+  {
+    id: 10,
+    name: "Thang",
+    role: "Developer",
+    image: imagePath.icMan6,
+  },
+];
+
 export default {
   tabs,
+  team,
   typeOfArtEvent,
   Category,
 };
