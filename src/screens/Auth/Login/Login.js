@@ -57,7 +57,7 @@ const Login = ({ navigation }) => {
         });
         setLoading(false);
       } catch (error) {
-        showError(error?.message);
+        console.log(error);
         setEmail("");
         setPassword("");
         setLoading(false);

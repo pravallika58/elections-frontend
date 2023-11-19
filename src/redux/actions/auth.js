@@ -36,7 +36,6 @@ export const getMyDetails = () => {
 };
 
 export const updateUser = (data) => {
-  console.log(data);
   const headers = {
     "Content-Type": "multipart/form-data",
   };

@@ -1,4 +1,5 @@
-export const API_BASE_URL = "http://localhost:10000/api";
+// export const API_BASE_URL = "http://localhost:10000/api";
+export const API_BASE_URL = "https://elections-backend.vercel.app/api";
 
 export const getApiURL = (endpoint) => API_BASE_URL + endpoint;
 

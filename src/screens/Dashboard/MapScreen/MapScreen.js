@@ -81,10 +81,12 @@ const MapScreen = ({ navigation }) => {
     }, [])
   );
 
-  events.forEach((event) => {
-    const eventDate = event.startdate.split("T")[0];
-    markedDates[eventDate] = { marked: true };
-  });
+  if (events !== 0) {
+    events.forEach((event) => {
+      const eventDate = event.startdate.split("T")[0];
+      markedDates[eventDate] = { marked: true };
+    });
+  }
 
   const getMapMode = async () => {
     try {

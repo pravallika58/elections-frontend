@@ -66,7 +66,7 @@ const Register = ({ navigation }) => {
         showSucess("User Registered Successfully");
         navigation.navigate(navigationStrings.LOGIN);
       } catch (error) {
-        showError(error?.error || error?.message);
+        console.log(error);
         setFirstName("");
         setLastName("");
         setEmail("");
