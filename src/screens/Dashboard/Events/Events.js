@@ -7,6 +7,7 @@ import {
   Image,
   Alert,
   ActivityIndicator,
+  Platform,
 } from "react-native";
 import React, {
   useCallback,
@@ -34,7 +35,11 @@ import * as ImagePicker from "expo-image-picker";
 import CustomButton from "../../../components/CustomButton";
 import navigationStrings from "../../../constants/navigationStrings";
 import { getData, showError, showSucess } from "../../../utils/helperFunctions";
-import { scale, verticalScale } from "../../../constants/responsiveSizes";
+import {
+  moderateScale,
+  scale,
+  verticalScale,
+} from "../../../constants/responsiveSizes";
 import { createEvent, updateEvent } from "../../../redux/actions/event";
 import { Entypo } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
@@ -43,6 +48,7 @@ import {
   requestForegroundPermissionsAsync,
   getCurrentPositionAsync,
 } from "expo-location";
+import StaticBox from "../../../components/StaticBox";
 
 const Events = ({ navigation, route }) => {
   const { item, key } = route.params;
@@ -70,6 +76,12 @@ const Events = ({ navigation, route }) => {
   const [region, setRegion] = useState(null);
   const [tokenLoading, setTokenLoading] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [showDatePickerForStartDate, setShowDatePickerForStartDate] =
+    useState(false);
+  const [showDatePickerForEndDate, setShowDatePickerForEndDate] =
+    useState(false);
+  const [startTimeAndroid, setStartTimeAndroid] = useState(false);
+  const [endTimeAndroid, setEndTimeAndroid] = useState(false);
   const colorScheme = useColorScheme();
   const theme = colorScheme === "light" ? lightTheme : darkTheme;
   const bottomSheetRef = useRef();
@@ -267,7 +279,7 @@ const Events = ({ navigation, route }) => {
       showSucess("Event created successfully");
       setLoading(false);
       navigation.replace(navigationStrings.MAIN, {
-        screen: navigationStrings.CONGRATS,
+        screen: navigationStrings.MY_EVENTS,
       });
       setLoading(false);
     } catch (error) {
@@ -319,21 +331,25 @@ const Events = ({ navigation, route }) => {
 
   const onChangeStartDate = (event, selectedDate) => {
     const currentDate = selectedDate;
+    setShowDatePickerForStartDate(false);
     setStartDate(currentDate);
   };
 
   const onChangeEndDate = (event, selectedDate) => {
     const currentDate = selectedDate;
+    setShowDatePickerForEndDate(false);
     setEndDate(currentDate);
   };
 
   const onChangeStartTime = (event, selectedDate) => {
     const currentDate = selectedDate;
+    setStartTimeAndroid(false);
     setStartTime(currentDate);
   };
 
   const onChangeEndTime = (event, selectedDate) => {
     const currentDate = selectedDate;
+    setEndTimeAndroid(false);
     setEndTime(currentDate);
   };
 
@@ -445,8 +461,7 @@ const Events = ({ navigation, route }) => {
       province &&
       country &&
       zipCode &&
-      typeArtEvent &&
-      images.length > 0
+      typeArtEvent
     ) {
       return false;
     }
@@ -500,6 +515,87 @@ const Events = ({ navigation, route }) => {
     );
   }
 
+  function dateOfStartAndEndForAndroid() {
+    return (
+      <View
+        style={[
+          styles.selectDateContainer,
+          {
+            marginHorizontal: 0,
+            marginRight: scale(24),
+          },
+        ]}
+      >
+        <View>
+          <Text
+            style={[
+              styles.labelStyle,
+              {
+                paddingLeft: scale(24),
+                color: theme.textColor,
+              },
+            ]}
+          >
+            Start Date
+          </Text>
+          <StaticBox
+            label={startDate.toLocaleDateString("en-US", {
+              month: "short",
+              day: "numeric",
+              year: "numeric",
+            })}
+            onPress={() => setShowDatePickerForStartDate(true)}
+          />
+        </View>
+
+        {showDatePickerForStartDate && (
+          <DateTimePicker
+            testID="dateTimePicker"
+            value={startDate}
+            mode={"date"}
+            is24Hour={true}
+            onChange={onChangeStartDate}
+            display="default"
+          />
+        )}
+
+        <View>
+          <View>
+            <Text
+              style={[
+                styles.labelStyle,
+                {
+                  paddingLeft: scale(24),
+                  color: theme.textColor,
+                },
+              ]}
+            >
+              End Date
+            </Text>
+            <StaticBox
+              label={endDate.toLocaleDateString("en-US", {
+                month: "short",
+                day: "numeric",
+                year: "numeric",
+              })}
+              onPress={() => setShowDatePickerForEndDate(true)}
+            />
+          </View>
+          {showDatePickerForEndDate && (
+            <DateTimePicker
+              testID="dateTimePicker"
+              value={endDate}
+              mode={"date"}
+              is24Hour={true}
+              onChange={onChangeEndDate}
+              display="default"
+            />
+          )}
+        </View>
+      </View>
+    );
+  }
+
   function permanentEvent() {
     return (
       <View style={styles.permanentCont}>
@@ -508,6 +604,7 @@ const Events = ({ navigation, route }) => {
             styles.permanentTextStyle,
             {
               color: theme.textColor,
+              paddingLeft: Platform.OS === "ios" ? scale(10) : scale(24),
             },
           ]}
         >
@@ -586,6 +683,106 @@ const Events = ({ navigation, route }) => {
               onChange={onChangeEndTime}
               display="default"
             />
+          </View>
+        </View>
+      </View>
+    );
+  }
+
+  function renderWhenEventForAndroid() {
+    return (
+      <View>
+        <Text
+          style={[
+            styles.whenEvent,
+            {
+              color: theme.textColor,
+              paddingHorizontal: scale(24),
+            },
+          ]}
+        >
+          When is your event?
+        </Text>
+
+        {permanentEvent()}
+        {permanent ? null : dateOfStartAndEndForAndroid()}
+
+        <View
+          style={[
+            styles.selectDateContainer,
+            {
+              marginHorizontal: 0,
+              marginRight: scale(24),
+            },
+          ]}
+        >
+          <View>
+            <View>
+              <Text
+                style={[
+                  styles.labelStyle,
+                  {
+                    paddingLeft: scale(24),
+                    color: theme.textColor,
+                  },
+                ]}
+              >
+                Start Time
+              </Text>
+              <StaticBox
+                label={startTime.toLocaleTimeString("en-Us", {
+                  hour: "numeric",
+                  minute: "numeric",
+                  hour12: true,
+                })}
+                time={true}
+                onPress={() => setStartTimeAndroid(true)}
+              />
+            </View>
+            {startTimeAndroid && (
+              <DateTimePicker
+                testID="dateTimePicker"
+                value={startTime}
+                mode={"time"}
+                is24Hour={true}
+                onChange={onChangeStartTime}
+                display="default"
+              />
+            )}
+          </View>
+          <View>
+            <View>
+              <Text
+                style={[
+                  styles.labelStyle,
+                  {
+                    paddingLeft: scale(24),
+                    color: theme.textColor,
+                  },
+                ]}
+              >
+                End Time
+              </Text>
+              <StaticBox
+                label={endTime.toLocaleTimeString("en-Us", {
+                  hour: "numeric",
+                  minute: "numeric",
+                  hour12: true,
+                })}
+                time={true}
+                onPress={() => setEndTimeAndroid(true)}
+              />
+            </View>
+            {endTimeAndroid && (
+              <DateTimePicker
+                testID="dateTimePicker"
+                value={endTime}
+                mode={"time"}
+                is24Hour={true}
+                onChange={onChangeEndTime}
+                display="default"
+              />
+            )}
           </View>
         </View>
       </View>
@@ -933,7 +1130,9 @@ const Events = ({ navigation, route }) => {
           placeholder="Enter event name"
         />
         {renderTypeOfArtEvent()}
-        {renderWhenEvent()}
+        {Platform.OS === "ios"
+          ? renderWhenEvent()
+          : renderWhenEventForAndroid()}
         {renderEventAddress()}
         {renderMap()}
         <Input

@@ -36,13 +36,8 @@ const AllEvents = ({ navigation, route }) => {
   const theme = colorScheme === "light" ? lightTheme : darkTheme;
 
   useEffect(() => {
-    if (totalEvents) {
-      console.log("Called");
-      allEvents();
-    } else {
-      fetchData();
-    }
-  }, [totalEvents]);
+    fetchData();
+  }, []);
 
   useFocusEffect(
     useCallback(() => {
@@ -75,11 +70,11 @@ const AllEvents = ({ navigation, route }) => {
       const city = cityComponent ? cityComponent.long_name : "";
       const state = stateComponent ? stateComponent.short_name : "";
       const cityState = `${city}, ${state}`;
+      console.log(cityState);
       const res = await getData("selectedDefaultLocation");
       const data = JSON.parse(res);
 
       const eventsData = await getAllEvents();
-      setEvents(eventsData);
 
       if (data) {
         data.cur ? setTitle(data.subLabel) : setTitle(data.label);
@@ -107,7 +102,7 @@ const AllEvents = ({ navigation, route }) => {
         const currentLocation = cityState.toLowerCase();
         const filteredEvents = eventsData.filter((event) => {
           const eventLocation = event.city.toLowerCase();
-          return eventLocation.includes(currentLocation);
+          return currentLocation.includes(eventLocation);
         });
         if (
           key === "today" ||
@@ -164,7 +159,7 @@ const AllEvents = ({ navigation, route }) => {
               : "All Events"}
           </Text>
         </View>
-        <TouchableOpacity onPress={() => setTotalEvents(!totalEvents)}>
+        {/* <TouchableOpacity onPress={() => setTotalEvents(!totalEvents)}>
           <Text
             style={[
               styles.heading,
@@ -175,7 +170,7 @@ const AllEvents = ({ navigation, route }) => {
           >
             All
           </Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
     );
   }
@@ -200,7 +195,7 @@ const AllEvents = ({ navigation, route }) => {
       >
         <View style={styles.cardImage}>
           <Image
-            source={item.images[0].url}
+            source={item.images > 0 ? item.images[0].url : imagePath.icDefault}
             style={styles.image}
             placeholder={imagePath.icDefault}
             placeholderContentFit="fill"
@@ -287,7 +282,7 @@ const AllEvents = ({ navigation, route }) => {
         ) : (
           <FlatList
             showsVerticalScrollIndicator={false}
-            data={totalEvents ? events : mainFilteredEventsByLocation}
+            data={mainFilteredEventsByLocation}
             keyExtractor={(item) => item._id}
             renderItem={renderItem}
             refreshing={loading}

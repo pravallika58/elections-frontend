@@ -42,7 +42,12 @@ import { Image } from "expo-image";
 import Modal from "react-native-modal";
 
 const MapScreen = ({ navigation }) => {
-  const [region, setRegion] = useState(null);
+  const [region, setRegion] = useState({
+    latitude: 0,
+    longitude: 0,
+    latitudeDelta: 0.09,
+    longitudeDelta: 0.02,
+  });
   const [todaySelect, setTodaySelect] = useState(false);
   const [weekSelect, setWeekSelect] = useState(false);
   const [monthSelect, setMonthSelect] = useState(false);
@@ -129,7 +134,6 @@ const MapScreen = ({ navigation }) => {
       const cityState = `${city}, ${state}`;
       const res = await getData("selectedDefaultLocation");
       const data = JSON.parse(res);
-
       if (data) {
         setData(data);
         data.cur ? setTitle(data.subLabel) : setTitle(data.label);
@@ -222,13 +226,11 @@ const MapScreen = ({ navigation }) => {
       const isSelectedType = selectedTypes.includes(event.type);
       return isSelectedCandidate || isSelectedType;
     });
-    if (data) {
-      const location = data.cur
-        ? data.subLabel.toLowerCase()
-        : data.label.toLowerCase();
+    if (data !== null) {
+      const currentLocation = defaultStart.toLowerCase();
       const filteredEvent = filteredEvents.filter((event) => {
         const eventLocation = event.city.toLowerCase();
-        return location.includes(eventLocation);
+        return currentLocation.includes(eventLocation);
       });
       navigation.navigate(navigationStrings.ALL_EVENTS, {
         dataEvents: filteredEvent,
@@ -237,10 +239,12 @@ const MapScreen = ({ navigation }) => {
       setSelectedItems([]);
       setSelectedTypes([]);
     } else {
-      const currentLocation = defaultStart.toLowerCase();
+      const location = data.cur
+        ? data.subLabel.toLowerCase()
+        : data.label.toLowerCase();
       const filteredEvent = filteredEvents.filter((event) => {
         const eventLocation = event.city.toLowerCase();
-        return currentLocation.includes(eventLocation);
+        return location.includes(eventLocation);
       });
       navigation.navigate(navigationStrings.ALL_EVENTS, {
         dataEvents: filteredEvent,
@@ -259,14 +263,11 @@ const MapScreen = ({ navigation }) => {
       return todayDate === eventDate;
     });
 
-    if (data) {
-      const location = data.cur
-        ? data.subLabel.toLowerCase().trim()
-        : data.label.toLowerCase().trim();
-
+    if (data !== null) {
+      const currentLocation = defaultStart.toLowerCase();
       const filteredEvents = filteredEventsToday.filter((event) => {
-        const eventLocation = event.city.toLowerCase().trim();
-        return location.includes(eventLocation);
+        const eventLocation = event.city.toLowerCase();
+        return currentLocation.includes(eventLocation);
       });
       navigation.navigate(navigationStrings.ALL_EVENTS, {
         dataEvents: filteredEvents,
@@ -274,10 +275,13 @@ const MapScreen = ({ navigation }) => {
       });
       setActiveTab(null);
     } else {
-      const currentLocation = defaultStart.toLowerCase();
+      const location = data.cur
+        ? data.subLabel.toLowerCase()
+        : data.label.toLowerCase();
+
       const filteredEvents = filteredEventsToday.filter((event) => {
         const eventLocation = event.city.toLowerCase();
-        return currentLocation.includes(eventLocation);
+        return location.includes(eventLocation);
       });
       navigation.navigate(navigationStrings.ALL_EVENTS, {
         dataEvents: filteredEvents,
@@ -297,7 +301,18 @@ const MapScreen = ({ navigation }) => {
       return todayDate <= eventDate && eventDate <= nextSevenDaysFormatted;
     });
 
-    if (data) {
+    if (data !== null) {
+      const currentLocation = defaultStart.toLowerCase();
+      const filteredEvents = filteredEventsWeek.filter((event) => {
+        const eventLocation = event.city.toLowerCase();
+        return currentLocation.includes(eventLocation);
+      });
+      navigation.navigate(navigationStrings.ALL_EVENTS, {
+        dataEvents: filteredEvents,
+        key: "week",
+      });
+      setActiveTab(null);
+    } else {
       const location = data.cur
         ? data.subLabel.toLowerCase()
         : data.label.toLowerCase();
@@ -306,17 +321,6 @@ const MapScreen = ({ navigation }) => {
         return location.includes(eventLocation);
       });
 
-      navigation.navigate(navigationStrings.ALL_EVENTS, {
-        dataEvents: filteredEvents,
-        key: "week",
-      });
-      setActiveTab(null);
-    } else {
-      const currentLocation = defaultStart.toLowerCase();
-      const filteredEvents = filteredEventsWeek.filter((event) => {
-        const eventLocation = event.city.toLowerCase();
-        return currentLocation.includes(eventLocation);
-      });
       navigation.navigate(navigationStrings.ALL_EVENTS, {
         dataEvents: filteredEvents,
         key: "week",
@@ -336,13 +340,11 @@ const MapScreen = ({ navigation }) => {
       const eventDate = event.startdate.split("T")[0];
       return todayDate <= eventDate && eventDate <= nextThirtyDaysFormatted;
     });
-    if (data) {
-      const location = data.cur
-        ? data.subLabel.toLowerCase()
-        : data.label.toLowerCase();
+    if (data !== null) {
+      const currentLocation = defaultStart.toLowerCase();
       const filteredEvents = filteredEventsMonthly.filter((event) => {
         const eventLocation = event.city.toLowerCase();
-        return location.includes(eventLocation);
+        return currentLocation.includes(eventLocation);
       });
       navigation.navigate(navigationStrings.ALL_EVENTS, {
         dataEvents: filteredEvents,
@@ -350,10 +352,12 @@ const MapScreen = ({ navigation }) => {
       });
       setActiveTab(null);
     } else {
-      const currentLocation = defaultStart.toLowerCase();
+      const location = data.cur
+        ? data.subLabel.toLowerCase()
+        : data.label.toLowerCase();
       const filteredEvents = filteredEventsMonthly.filter((event) => {
         const eventLocation = event.city.toLowerCase();
-        return currentLocation.includes(eventLocation);
+        return location.includes(eventLocation);
       });
       navigation.navigate(navigationStrings.ALL_EVENTS, {
         dataEvents: filteredEvents,
@@ -369,14 +373,11 @@ const MapScreen = ({ navigation }) => {
       const eventDate = event.startdate.split("T")[0];
       return eventDate === selectedDay.dateString;
     });
-    if (data) {
-      const location = data.cur
-        ? data.subLabel.toLowerCase().trim()
-        : data.label.toLowerCase().trim();
-
+    if (data !== null) {
+      const currentLocation = defaultStart.toLowerCase();
       const filteredEvents = filtered.filter((event) => {
-        const eventLocation = event.city.toLowerCase().trim();
-        return location.includes(eventLocation);
+        const eventLocation = event.city.toLowerCase();
+        return currentLocation.includes(eventLocation);
       });
       navigation.navigate(navigationStrings.ALL_EVENTS, {
         dataEvents: filteredEvents,
@@ -384,10 +385,13 @@ const MapScreen = ({ navigation }) => {
       });
       setActiveTab(null);
     } else {
-      const currentLocation = defaultStart.toLowerCase();
+      const location = data.cur
+        ? data.subLabel.toLowerCase().trim()
+        : data.label.toLowerCase().trim();
+
       const filteredEvents = filtered.filter((event) => {
-        const eventLocation = event.city.toLowerCase();
-        return currentLocation.includes(eventLocation);
+        const eventLocation = event.city.toLowerCase().trim();
+        return location.includes(eventLocation);
       });
       navigation.navigate(navigationStrings.ALL_EVENTS, {
         dataEvents: filteredEvents,
@@ -574,7 +578,6 @@ const MapScreen = ({ navigation }) => {
         <MapView
           mapType={mapType}
           ref={mapViewRef}
-          showsMyLocationButton={true}
           region={region}
           provider={PROVIDER_GOOGLE}
           showsUserLocation={true}
@@ -591,7 +594,7 @@ const MapScreen = ({ navigation }) => {
               }}
             />
           )}
-          {data.lat !== 0 && data.long !== 0 && (
+          {data.lat && data.long && (
             <Marker
               coordinate={{
                 latitude: data.lat,

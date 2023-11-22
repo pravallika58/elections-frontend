@@ -6,6 +6,7 @@ import WordIcon from "./WordIcon";
 import IconTextIcon from "./IconTextIcon";
 import Card from "./Card";
 import SearchHeader from "./SearchHeader";
+import StaticBox from "./StaticBox";
 
 export default {
   Header,
@@ -16,4 +17,5 @@ export default {
   IconTextIcon,
   Card,
   SearchHeader,
+  StaticBox,
 };

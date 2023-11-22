@@ -20,10 +20,21 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyD6XoK5xiTdDg5n6_SuwUnCFdi9Ij176I4"
+        }
+      },
+      "package": "com.pravallikan.Elections"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "a579d77a-cbad-4295-af85-626fa0fc1768"
+      }
     }
   }
 }

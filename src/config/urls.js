@@ -1,8 +1,6 @@
-// export const API_BASE_URL = "http://localhost:10000/api";
+// export const API_BASE_URL = "http://143.198.185.251:80/api";
 export const API_BASE_URL = "https://elections-backend.vercel.app/api";
-
 export const getApiURL = (endpoint) => API_BASE_URL + endpoint;
-
 export const SIGNUP_API = getApiURL("/register");
 export const LOGIN_API = getApiURL("/login");
 export const FORGOT_PASSWORD_API = getApiURL("/forgot-password-token");

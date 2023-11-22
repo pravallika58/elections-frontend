@@ -86,7 +86,7 @@ const Header = ({
 
 const styles = StyleSheet.create({
   headerContainer: {
-    marginTop: verticalScale(20),
+    marginTop: verticalScale(50),
     marginHorizontal: scale(16),
     flexDirection: "row",
     alignItems: "center",

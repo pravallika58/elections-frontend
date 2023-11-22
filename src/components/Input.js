@@ -4,6 +4,7 @@ import {
   StyleSheet,
   TextInput,
   useColorScheme,
+  TouchableOpacity,
 } from "react-native";
 import React from "react";
 import {
@@ -13,6 +14,7 @@ import {
   verticalScale,
 } from "../constants/responsiveSizes";
 import colors, { darkTheme, lightTheme } from "../constants/colors";
+import { AntDesign } from "@expo/vector-icons";
 
 const Input = ({
   placeholder,
@@ -57,6 +59,7 @@ const Input = ({
           </Text>
         )}
       </View>
+
       <TextInput
         editable={editable}
         autoCapitalize={"none"}

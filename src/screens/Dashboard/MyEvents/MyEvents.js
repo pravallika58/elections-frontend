@@ -52,6 +52,7 @@ const MyEvents = ({ navigation }) => {
       setLoading(false);
     }
   };
+
   function renderHeader() {
     return (
       <View style={styles.header}>
@@ -96,7 +97,7 @@ const MyEvents = ({ navigation }) => {
       >
         <View style={styles.cardImage}>
           <Image
-            source={item.images[0].url}
+            source={item.images > 0 ? item.images[0].url : imagePath.icDefault}
             style={styles.image}
             placeholder={imagePath.icDefault}
             placeholderContentFit="fill"

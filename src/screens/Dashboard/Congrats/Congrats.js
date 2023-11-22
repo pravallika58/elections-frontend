@@ -4,15 +4,16 @@ import styles from "./styles";
 import { darkTheme, lightTheme } from "../../../constants/colors";
 import imagePath from "../../../constants/imagePath";
 import navigationStrings from "../../../constants/navigationStrings";
+import { useNavigation } from "@react-navigation/native";
 
-const Congrats = ({ navigation }) => {
+const Congrats = () => {
   const colorScheme = useColorScheme();
   const theme = colorScheme === "light" ? lightTheme : darkTheme;
-
+  const navigation = useNavigation();
   useEffect(() => {
     const timeout = setTimeout(() => {
       navigation.navigate(navigationStrings.MAIN, {
-        screen: navigationStrings.MAP_SCREEN,
+        screen: navigationStrings.MY_EVENTS,
       });
     }, 2000);
     return () => clearTimeout(timeout);

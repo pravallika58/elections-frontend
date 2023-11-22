@@ -133,7 +133,7 @@ const Login = ({ navigation }) => {
           label="Login as Guest"
           onPress={onPressGuestLogin}
           customStyles={{
-            backgroundColor: colors.buttonBackground,
+            backgroundColor: theme.buttonBackground,
           }}
         />
         {/* Don't have an account? Sign Up */}
