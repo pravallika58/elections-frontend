@@ -607,8 +607,8 @@ const MapScreen = ({ navigation }) => {
               <Marker
                 key={index}
                 coordinate={{
-                  latitude: parseFloat(event.latitude),
-                  longitude: parseFloat(event.longitude),
+                  latitude: event.latitude,
+                  longitude: event.longitude,
                 }}
                 onPress={() =>
                   navigation.navigate(navigationStrings.EVENT_DETAILS, {
