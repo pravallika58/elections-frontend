@@ -1,6 +1,6 @@
 import imagePath from "./imagePath";
 
-export const GOOGLE_API_KEY = "AIzaSyDDWp3_sAHm2vzOpRU8_cwN7vLFICBNm1o";
+export const GOOGLE_API_KEY = "AIzaSyAt9e2a-Pvg71ig2ExV_QNla4EiB2TEz2Y";
 
 const tabs = [
   {

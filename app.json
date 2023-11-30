@@ -14,7 +14,11 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "config": {
+        "googleMapsApiKey": "AIzaSyD85hbVF60EV2xHQJlwSs1IGYTeWTimuo0"
+      },
+      "bundleIdentifier": "com.pravallikan.Elections"
     },
     "android": {
       "adaptiveIcon": {
@@ -23,7 +27,7 @@
       },
       "config": {
         "googleMaps": {
-          "apiKey": "AIzaSyD6XoK5xiTdDg5n6_SuwUnCFdi9Ij176I4"
+          "apiKey": "AIzaSyA4nZ6mOxpx-YAlqUrJkxZnbGPxh_dY4f4"
         }
       },
       "package": "com.pravallikan.Elections"

@@ -5,6 +5,7 @@ import {
   Image,
   TouchableOpacity,
   useColorScheme,
+  Platform,
 } from "react-native";
 import React from "react";
 import {
@@ -86,7 +87,7 @@ const Header = ({
 
 const styles = StyleSheet.create({
   headerContainer: {
-    marginTop: verticalScale(50),
+    marginTop: Platform.OS === "ios" ? verticalScale(20) : verticalScale(50),
     marginHorizontal: scale(16),
     flexDirection: "row",
     alignItems: "center",

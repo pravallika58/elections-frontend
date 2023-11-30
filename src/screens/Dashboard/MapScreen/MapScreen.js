@@ -168,6 +168,7 @@ const MapScreen = ({ navigation }) => {
   const getEvents = async () => {
     try {
       const response = await getAllEvents();
+
       setEvents(response);
       await compareUserId(response);
     } catch (error) {
@@ -607,8 +608,8 @@ const MapScreen = ({ navigation }) => {
               <Marker
                 key={index}
                 coordinate={{
-                  latitude: event.latitude,
-                  longitude: event.longitude,
+                  latitude: parseFloat(event.latitude) || 0,
+                  longitude: parseFloat(event.longitude) || 0,
                 }}
                 onPress={() =>
                   navigation.navigate(navigationStrings.EVENT_DETAILS, {
