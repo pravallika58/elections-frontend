@@ -18,6 +18,7 @@
       "config": {
         "googleMapsApiKey": "AIzaSyD85hbVF60EV2xHQJlwSs1IGYTeWTimuo0"
       },
+
       "bundleIdentifier": "com.pravallikan.Elections"
     },
     "android": {

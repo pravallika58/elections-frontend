@@ -659,7 +659,7 @@ const Events = ({ navigation, route }) => {
               testID="dateTimePicker"
               value={startTime}
               mode={"time"}
-              is24Hour={true}
+              is24Hour={Platform.OS === "ios" ? true : false}
               onChange={onChangeStartTime}
               display="default"
             />
@@ -679,7 +679,7 @@ const Events = ({ navigation, route }) => {
               testID="dateTimePicker"
               value={endTime}
               mode={"time"}
-              is24Hour={true}
+              is24Hour={Platform.OS === "ios" ? true : false}
               onChange={onChangeEndTime}
               display="default"
             />
